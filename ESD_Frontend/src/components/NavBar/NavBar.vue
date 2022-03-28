@@ -43,8 +43,6 @@
 </template>
 
 <script>
-import Swal from "sweetalert2";
-
 export default {
   name: "NavBar",
   data() {
@@ -54,7 +52,7 @@ export default {
   },
   methods: {
     guestuserAlert() {
-      Swal.fire({
+      this.$swal({
         icon: "warning",
         title: "Want to view Saved Recipes?",
         text: "Login/Register to gain access to this page",

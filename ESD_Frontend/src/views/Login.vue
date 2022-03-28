@@ -9,8 +9,6 @@
 
 <script>
 // @ is an alias to /src
-// import Swal from "sweetalert2";
-// import { getAuth, onAuthStateChanged } from "firebase/auth";
 import LoginContainer from '@/components/LoginContainer'
 import RegisterContainer from '@/components/RegisterContainer'
 

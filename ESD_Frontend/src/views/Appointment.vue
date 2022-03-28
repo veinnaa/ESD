@@ -16,6 +16,6 @@ export default {
 }
 </script>
 <style lang="sass" scoped>
-.explore
+.appointment
   min-height: 100vh
 </style>
