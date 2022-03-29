@@ -4,6 +4,7 @@ import Profile from '../views/Profile.vue'
 import Login from '../views/Login.vue'
 import Appointment from '../views/Appointment.vue'
 import AppointmentDetails from '../views/AppointmentDetails.vue'
+import Checkout from '../views/Checkout.vue'
 
 const routes = [
   {
@@ -29,9 +30,14 @@ const routes = [
     component: Appointment
   },
   {
-    path: '/explore/:bookingId',
+    path: '/Appointment/:bookingID',
     name: 'AppointmentDetails',
     component: AppointmentDetails
+  },
+  {
+    path: '/Checkout',
+    name: 'Checkout',
+    component: Checkout
   }
 ]
 

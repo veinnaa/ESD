@@ -1,4 +1,4 @@
-      // This is your test publishable API key.
+// This is your test publishable API key.
 const stripe = Stripe("pk_test_51Kh46VBUerOeATXPukBZ2Jmy5Z5iL54RVwxwA29N9UdSTXaRgMAzrxicIgVvwv82Sx6MylRjXk2ehUI3SpqzN2Bu00yWJTwLvZ");
 
 // The items the customer wants to buy
@@ -38,7 +38,7 @@ async function handleSubmit(e) {
     elements,
     confirmParams: {
       // Make sure to change this to your payment completion page
-      return_url: "http://localhost:4242/index_vue.html",
+      return_url: "http://localhost:3000/checkout.html",
     },
   });
 

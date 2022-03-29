@@ -20,7 +20,7 @@
       <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
         <div class="navbar-nav">
           <router-link to="/" class="link nav-text" title="Home"> Home </router-link>
-          <router-link to="/explore" class="link nav-text" title="Explore recipe"
+          <router-link to="/appointment" class="link nav-text" title="Explore recipe"
             >Appointments</router-link
           >
 

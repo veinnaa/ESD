@@ -1,41 +1,32 @@
 <template>
-  <div class="details">
-    <AppointmentDetailsView :bookingId="this.$route.params"/>
-  </div>
-  <div v-for="items in details">
-    <table>
-      <tr>
-        <td>{{items}}</td>
-      </tr>
-    </table>
+  <div class="checkout">
+
   </div>
 </template>
 
 <script>
 // @ is an alias to /src
-import AppointmentDetailsView from '@/components/AppointmentDetailsView'
-
-export default {
-  name: 'AppointmentDetails',
-  components: {
-    AppointmentDetailsView
+import CheckoutView from '@/components/Checkout'
+export default{
+ name: "Checkout",
+  computed: {
+    hasBookings: function () {
+      return this.data.booking.length > 0;
+    }
   },
   data() {
     return {
       message: "no booking records",
       doctorID: "",
-      details: {
-
-      }
     };
   },
-  mounted() {
+  mounted(){
     const response =
-      fetch("http://localhost:5002/booking/1")
+      fetch(bookingURL)
         .then(response => response.json())
         .then(data => {
           console.log(response);
-          this.details = data.data;
+          this.doctorID = data.data['DoctorID'];
           }
         )
         .catch(error => {
