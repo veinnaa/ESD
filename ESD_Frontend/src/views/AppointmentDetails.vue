@@ -2,13 +2,6 @@
   <div class="details">
     <AppointmentDetailsView :bookingId="this.$route.params"/>
   </div>
-  <div v-for="items in details">
-    <table>
-      <tr>
-        <td>{{items}}</td>
-      </tr>
-    </table>
-  </div>
 </template>
 
 <script>

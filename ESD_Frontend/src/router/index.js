@@ -25,17 +25,17 @@ const routes = [
 
   },
   {
-    path: '/Appointment',
+    path: '/appointment',
     name: 'Appointment',
     component: Appointment
   },
   {
-    path: '/Appointment/:bookingID',
+    path: '/appointment/:bookingID',
     name: 'AppointmentDetails',
     component: AppointmentDetails
   },
   {
-    path: '/Checkout',
+    path: '/checkout',
     name: 'Checkout',
     component: Checkout
   }
