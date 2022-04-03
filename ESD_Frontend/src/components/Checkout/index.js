@@ -21,11 +21,12 @@ async function initialize() {
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ items }),
   });
-  const { clientSecret } = await response.json();
+  const { clientSecret, amount } = await response.json();
+  console.log(amount);
   const appearance = {
     theme: 'stripe',
   };
-  elements = stripe.elements({ appearance, clientSecret });
+  elements = stripe.elements({ appearance, clientSecret, amount });
 
   const paymentElement = elements.create("payment");
   paymentElement.mount("#payment-element");
