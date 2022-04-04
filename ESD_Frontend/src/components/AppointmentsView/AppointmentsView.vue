@@ -4,9 +4,10 @@
     <h1>Appointments</h1>
     <div>
       <ol >
-        <li v-for="appointment in details">
+
+        <li v-for="appointment, k in details" :key=k>
           {{appointment}}
-          <appointment-info id="appointment['BookingID']"/>
+
           <button @click="goToAppointment(appointment['BookingID'])">Open</button>
         </li>
           
@@ -17,11 +18,13 @@
 
 <script>
 // import axios from "axios";
-var bookingURL = "http://localhost:5002/booking"
+var bookingURL = "http://localhost:5002/booking";
 export default {
   name: "AppointmentsView",
-  // components: {
-  // },
+
+  components:{
+
+  },
   methods:{
     goToAppointment(x){
       this.$router.push('/appointment/'+ x)
@@ -30,7 +33,7 @@ export default {
   data() {
     return {
       details : {
-      }
+      },
     }
   },
   mounted() {
@@ -38,7 +41,6 @@ export default {
       fetch(bookingURL)
         .then(response=>response.json())
         .then(data => {
-          console.log(response);
           this.details = data.data['booking'];
         }
       )

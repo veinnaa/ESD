@@ -23,7 +23,7 @@
 
 		<div class="d-flex justify-content-between">
 			<p class="mb-2">Specialization</p>
-			<p class="mb-2">Physiology</p>
+			<p class="mb-2">{{ specialization }}</p>
 		</div>
 
 		<button id="submit">
@@ -51,16 +51,22 @@ export default {
       doctorID: "",
       doctorName:"",
       details: {},
-      rate: ""
+      rate: "",
+      bookingID:this.$route.params.bookingID,
+      specialization:""
+
     }
   },
   mounted() {
     this.getbooking();
   },
+  created() {
+  }
+  ,
   methods: {
     getbooking: function(){
       const response =
-        fetch(bookingURL)
+        fetch(bookingURL+'/'+this.bookingID)
           .then(response => response.json())
           .then(data => {
             this.details = data.data;
@@ -70,7 +76,9 @@ export default {
                 .then(resp => resp.json())
                 .then(data => {
                   this.doctorName = data.data['DoctorName'],
-                  this.rate = data.data['Rates']
+                  this.rate = data.data['Rates'],
+                  this.specialization = data.data['Specialisation']
+
                 })
             }
           )
@@ -78,7 +86,10 @@ export default {
             // Errors when calling the service; such as network error, 
             // service offline, etc
             console.log(this.message + error);
-          });
+
+          })
+    }
+
     }
   },
   // computed: {

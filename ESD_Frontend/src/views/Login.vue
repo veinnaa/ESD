@@ -1,9 +1,11 @@
 <template>
-  <div v-show="login" class="login">
-    <LoginContainer @toggleRegister="toggleCard" />
-  </div>
-  <div v-show="register" class="register">
-    <RegisterContainer @toggleLogin="toggleCard" />
+  <div>
+    <div v-show="login" class="login">
+      <LoginContainer @toggleRegister="toggleCard" />
+    </div>
+    <div v-show="register" class="register">
+      <RegisterContainer @toggleLogin="toggleCard" />
+    </div>
   </div>
 </template>
 
