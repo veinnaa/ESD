@@ -1,40 +1,38 @@
 <template>
   <div class="appointments-view">
-
-    <h1>Appointments</h1>
-    <div>
-      <ol >
-
-        <li v-for="appointment, k in details" :key=k>
-          {{appointment}}
-
-          <button @click="goToAppointment(appointment['BookingID'])">Open</button>
-        </li>
-          
-      </ol>
-    </div>
-
     <h2>Upcoming Appointment</h2>
     <AppointmentCard class="appointment-card" />
     <h2>All Appointments</h2>
-    <table class="table" border="1">
+    <table class="table table-bordered">
       <thead>
         <tr class="table-success">
-          <th scope="col" v-for="(header, i) in headerList" :key="i" class="text-center">
+          <th
+            scope="col"
+            v-for="(header, i) in headerList"
+            :key="i"
+            class="text-center"
+          >
             {{ header }}
           </th>
         </tr>
       </thead>
       <tbody>
         <!-- Loop through appointment lists -->
-        <tr class="text-center">
+        <tr class="text-center" v-for="(appointment, i) in details" :key="i">
           <!-- Loop through each appointment -->
-          <td>25 March 2022</td>
-          <td class="text-start">https://Zoom5830</td>
-          <td>Dr. Sharon Ng</td>
-          <td>Pending</td>
+          <td>{{ dateList[i][0] }}</td>
+          <td>{{ dateList[i][1] }}</td>
+          <td class="text-start"><a :href="appointment.ZoomID">{{ appointment.ZoomID }}</a></td>
+          <td>{{ doctorNameList[i] }}</td>
+          <td v-if="appointment.AcceptanceStatus == null">
+            Pending confirmation
+          </td>
+          <td v-else>Confirmed</td>
           <td><i class="bi bi-trash-fill text-danger"></i></td>
-          <td><i class="bi bi-credit-card-fill text-primary"></i></td>
+          <td v-if="appointment.PaymentStatus == false">
+            <i class="bi bi-credit-card-fill text-primary" @click="goToAppointment(appointment['BookingID'])"></i>
+          </td>
+          <td v-else><i class="bi bi-check-circle-fill text-success"></i></td>
         </tr>
       </tbody>
     </table>
@@ -48,35 +46,68 @@ export default {
   name: "AppointmentsView",
   components: {
     AppointmentCard,
-    bookingURL: "http://localhost:5002/booking"
   },
   data() {
     return {
-      details : {},
+      details: {},
+      dateList: [],
+      doctorName: "",
+      doctorID: "",
+      doctorNameList: [],
       headerList: [
         "Date",
-        "Appointment Zoom Link",
+        "Time",
+        "Appointment Link",
         "Doctor",
         "Status",
         "Cancel?",
         "Checkout",
       ],
-    }
+    };
   },
   mounted() {
-    const response = 
-      fetch(this.bookingURL)
-        .then(response=>response.json())
-        .then(data => {
-          this.details = data.data['booking'];
-        }
-      )
+    this.getAppointmentDetails();
   },
-  methods:{
-    goToAppointment(x){
-      this.$router.push('/appointment/'+ x)
-    }
-  }
+  methods: {
+    goToAppointment(x) {
+      this.$router.push("/appointment/" + x);
+    },
+    async getAppointmentDetails() {
+      const response = await fetch("http://localhost:5002/booking")
+        .then((response) => response.json())
+        .then((data) => {
+          // console.log(data);
+          this.details = data.data["booking"];
+          console.log(this.details);
+        })
+        .catch((error) => {
+          // Errors when calling the service; such as network error,
+          // service offline, etc
+          console.log("unable to get bookings" + error);
+        });
+
+      for (let i = 0; i < this.details.length; i++) {
+        await this.getDoctorName(this.details[i].DoctorID);
+
+        let date = new Date(this.details[i].DateTime)
+        this.dateList.push([date.toLocaleDateString(), date.toLocaleTimeString()])
+        this.doctorNameList.push(this.doctorName);
+        console.log(this.dateList);
+      }
+    },
+    async getDoctorName(doctorID) {
+      const response = await fetch("http://localhost:5001/doctor/" + doctorID)
+        .then((response) => response.json())
+        .then((data) => {
+          // console.log(response);
+          this.doctorName = data.data["DoctorName"];
+          // console.log(this.doctorName);
+        })
+        .catch((error) => {
+          console.log("unable to get doctor" + error);
+        });
+    },
+  },
 };
 </script>
 

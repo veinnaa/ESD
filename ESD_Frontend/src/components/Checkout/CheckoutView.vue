@@ -62,7 +62,7 @@ export default {
   methods: {
     getbooking() {
       const response =
-        fetch(bookingURL+'/'+this.bookingID)
+        fetch(bookingURL+'/' + this.bookingID)
           .then(response => response.json())
           .then(data => {
             this.details = data.data;
