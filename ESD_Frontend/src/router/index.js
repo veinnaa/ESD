@@ -4,6 +4,12 @@ import Profile from '../views/Profile.vue'
 import Login from '../views/Login.vue'
 import Appointment from '../views/Appointment.vue'
 import AppointmentDetails from '../views/AppointmentDetails.vue'
+import newlogin from '../views/newlogin.vue'
+import Form from '../views/form.vue'
+import FormTwo from '../views/formtwo.vue'
+import FormThree from '../views/formthree.vue'
+
+// import Form from '../views/PersonalDetailsForm.vue'
 
 const routes = [
   {
@@ -33,6 +39,27 @@ const routes = [
     name: 'AppointmentDetails',
     component: AppointmentDetails
   }
+  ,
+  {
+    path: '/newlogin',
+    name: 'newlogin',
+    component: newlogin
+  },
+  {
+    path: '/form',
+    name: 'form',
+    component: Form
+  },
+  {
+    path: '/formtwo',
+    name: 'formtwo',
+    component: FormTwo
+  },
+  {
+    path: '/formthree',
+    name: 'formthree',
+    component: FormThree
+  },
 ]
 
 const router = createRouter({
