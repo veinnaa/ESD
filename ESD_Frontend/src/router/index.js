@@ -4,16 +4,13 @@ import Profile from '../views/Profile.vue'
 import Login from '../views/Login.vue'
 import Appointment from '../views/Appointment.vue'
 import AppointmentDetails from '../views/AppointmentDetails.vue'
-<<<<<<< HEAD
 import newlogin from '../views/newlogin.vue'
 import Form from '../views/form.vue'
 import FormTwo from '../views/formtwo.vue'
 import FormThree from '../views/formthree.vue'
 
 // import Form from '../views/PersonalDetailsForm.vue'
-=======
 import Checkout from '../views/Checkout.vue'
->>>>>>> 830faa586056f2758648c7cc1d3f38a0ee260f97
 
 const routes = [
   {

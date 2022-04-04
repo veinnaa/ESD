@@ -5,20 +5,20 @@
         <div className="user signinBx">
           <div className="imgBx">
             <img
-              src="https://images.unsplash.com/photo-1486546910464-ec8e45c4a137?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1902&q=80"
+              src="https://mend.com/wp-content/themes/mend2.0/images/mend-hp-hero-telemedicine.svg"
               alt=""
             />
           </div>
           <div className="formBx">
             <form action="">
-              <h2>Sign In</h2>
+              <h2>Sign Up</h2>
               <input type="text" name="" placeholder="Username" />
               <input type="password" name="" placeholder="Password" />
               <input type="submit" name="" value="Login" />
               <p className="signup">
-                Don't have an account ?
+                Already have an account ?
                 <a href="#" @click="$emit('toggleNewRegister', 'newreg')">
-                  Sign Up.
+                  Sign In.
                 </a>
               </p>
             </form>

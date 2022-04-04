@@ -46,7 +46,7 @@
     <button type="button" class="position-absolute top-0 start-50 translate-middle btn btn-sm btn-primary rounded-pill" style="width: 2rem; height:2rem;">2</button>
     <button type="button" class="position-absolute top-0 start-100 translate-middle btn btn-sm btn-secondary rounded-pill" style="width: 2rem; height:2rem;">3</button>
   </div>
-     <button type="button" class="btn btn-primary next1">Next </button>     
+     <button type="button" class="btn btn-primary next1"><router-link style="text-decoration: none; color: White" to="/formthree" >Next</router-link></button>     
 
 </div>
 
