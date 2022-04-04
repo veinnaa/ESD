@@ -20,10 +20,12 @@
       <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
         <div class="navbar-nav">
           <router-link to="/" class="link nav-text" title="Home"> Home </router-link>
-          <router-link to="/explore" class="link nav-text" title="Explore recipe"
+          <router-link to="/appointment" class="link nav-text" title="Appointment"
             >Appointments</router-link
           >
-
+          <router-link to="/payment" class="link nav-text" title="Booking payment"
+            >Payment</router-link
+          >
           <router-link
             v-if="!this.loginStatus"
             to="/login"

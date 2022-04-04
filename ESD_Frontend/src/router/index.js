@@ -4,6 +4,7 @@ import Profile from '../views/Profile.vue'
 import Login from '../views/Login.vue'
 import Appointment from '../views/Appointment.vue'
 import AppointmentDetails from '../views/AppointmentDetails.vue'
+import Payment from '../views/Payment.vue'
 
 const routes = [
   {
@@ -32,6 +33,11 @@ const routes = [
     path: '/explore/:bookingId',
     name: 'AppointmentDetails',
     component: AppointmentDetails
+  },
+  {
+    path: '/payment',
+    name: 'Payment',
+    component: Payment
   }
 ]
 
