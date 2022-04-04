@@ -1,6 +1,7 @@
 <template>
   <div class="details">
-    <AppointmentDetailsView :bookingId="this.$route.params"/>
+    <AppointmentDetailsView />
+    
   </div>
 </template>
 
@@ -12,6 +13,16 @@ export default {
   name: 'AppointmentDetails',
   components: {
     AppointmentDetailsView
+  },
+  data() {
+    return {
+      message: "no booking records",
+      doctorID: "",
+      details: {
+      }
+    };
+  },
+  mounted() {
   }
 }
 </script>

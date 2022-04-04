@@ -1,31 +1,32 @@
 <template>
-  <div class="appointment" >
-    <!-- <h1>Appointments</h1> -->
-    <AppointmentsView />
-    
+  <div class="checkout">
+    <h2>Payment Checkout</h2>
+
+    <CheckoutView />
   </div>
-  
 </template>
+
+
 
 <script>
 // @ is an alias to /src
-import AppointmentsView from '@/components/AppointmentsView'
+import CheckoutView from '@/components/Checkout'
 
-export default {
-  name: 'appointment',
+export default{
+  name: "Checkout",
   components: {
-    AppointmentsView
+    CheckoutView
   }
 }
 </script>
+
 <style lang="sass" scoped>
 @import '@/assets/sass/global.sass'
 
-.appointment
+.checkout
   min-height: 100vh
   margin-top: 30px
-  h1
-    font-size: 3em
+  h2
     font-weight: bold
     color: $main
     text-align: center

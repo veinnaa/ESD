@@ -1,4 +1,4 @@
-      // This is your test publishable API key.
+// This is your test publishable API key.
 const stripe = Stripe("pk_test_51Kh46VBUerOeATXPukBZ2Jmy5Z5iL54RVwxwA29N9UdSTXaRgMAzrxicIgVvwv82Sx6MylRjXk2ehUI3SpqzN2Bu00yWJTwLvZ");
 
 // The items the customer wants to buy
@@ -9,22 +9,27 @@ let elements;
 initialize();
 checkStatus();
 
-document
-  .querySelector("#payment-form")
-  .addEventListener("submit", handleSubmit);
+setTimeout(() => {document
+  .querySelector("#payment-form")}, 4000);
+
+if (document
+  .querySelector("#payment-form")){
+    document
+    .querySelector("#payment-form")
+    .addEventListener("submit", handleSubmit)};
 
 // Fetches a payment intent and captures the client secret
 async function initialize() {
-  const response = await fetch("/create-payment-intent", {
+  const response = await fetch("http://localhost:4242/create-payment-intent", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ items }),
   });
-  const { clientSecret } = await response.json();
+  const { clientSecret, amount } = await response.json();
   const appearance = {
     theme: 'stripe',
   };
-  elements = stripe.elements({ appearance, clientSecret });
+  elements = stripe.elements({ appearance, clientSecret, amount });
 
   const paymentElement = elements.create("payment");
   paymentElement.mount("#payment-element");
@@ -38,7 +43,7 @@ async function handleSubmit(e) {
     elements,
     confirmParams: {
       // Make sure to change this to your payment completion page
-      return_url: "http://localhost:4242/index_vue.html",
+      return_url: "http://localhost:3000/index.html",
     },
   });
 
@@ -87,10 +92,11 @@ async function checkStatus() {
 // ------- UI helpers -------
 
 function showMessage(messageText) {
-  const messageContainer = document.querySelector("#payment-message");
+  const messageContainer = setTimeout(()=>{
+    document.querySelector("#payment-message")},3000);
 
-  messageContainer.classList.remove("hidden");
-  messageContainer.textContent = messageText;
+  setTimeout(()=> {messageContainer.classList.remove("hidden"), messageContainer.textContent = messageText}, 3000);
+  // messageContainer.textContent = messageText;
 
   setTimeout(function () {
     messageContainer.classList.add("hidden");
@@ -102,12 +108,21 @@ function showMessage(messageText) {
 function setLoading(isLoading) {
   if (isLoading) {
     // Disable the button and show a spinner
-    document.querySelector("#submit").disabled = true;
-    document.querySelector("#spinner").classList.remove("hidden");
-    document.querySelector("#button-text").classList.add("hidden");
+    setTimeout(()=> {document.querySelector("#submit").disabled = true,
+    document.querySelector("#spinner").classList.remove("hidden"),
+    document.querySelector("#button-text").classList.add("hidden")},3000)
+    // document.querySelector("#submit").disabled = true;
+    // document.querySelector("#spinner").classList.remove("hidden");
+    // document.querySelector("#button-text").classList.add("hidden");
   } else {
-    document.querySelector("#submit").disabled = false;
-    document.querySelector("#spinner").classList.add("hidden");
-    document.querySelector("#button-text").classList.remove("hidden");
+    setTimeout(()=> {document.querySelector("#submit").disabled = false,
+    document.querySelector("#spinner").classList.add("hidden"),
+    document.querySelector("#button-text").classList.remove("hidden")},3000)
+    // document.querySelector("#submit").disabled = false;
+    // document.querySelector("#spinner").classList.add("hidden");
+    // document.querySelector("#button-text").classList.remove("hidden");
   }
 }
+
+
+export { default } from './CheckoutView.vue'

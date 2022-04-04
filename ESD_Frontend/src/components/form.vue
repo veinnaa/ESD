@@ -61,7 +61,7 @@
     <button type="button" class="position-absolute top-0 start-50 translate-middle btn btn-sm btn-secondary rounded-pill" style="width: 2rem; height:2rem;">2</button>
     <button type="button" class="position-absolute top-0 start-100 translate-middle btn btn-sm btn-secondary rounded-pill" style="width: 2rem; height:2rem;">3</button>
   </div>
-  <button type="button" class="btn btn-primary next1"> <router-link to="/formtwo">Next</router-link></button>
+  <button type="button" class="btn btn-primary next1"> <router-link to="/formtwo" >Next</router-link></button>
 
 </div>
 
@@ -124,6 +124,7 @@ label{
   margin-top: 15px;
   margin-right: 50px;
 }
+
 
 
 </style>

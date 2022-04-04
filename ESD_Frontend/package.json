@@ -9,16 +9,24 @@
   },
   "dependencies": {
     "axios": "^0.26.1",
+    "bootstrap": "^5.1.3",
+    "bootstrap-vue": "^2.21.2",
     "sass": "^1.49.9",
     "vue": "^3.2.31",
     "vue-router": "^4.0.14",
+<<<<<<< HEAD
     "vue-sweetalert": "^0.1.18",
     "vue-sweetalert2": "^5.0.2"
+=======
+    "vue-sweetalert2": "^5.0.2",
+    "vue-use-stripe": "^0.1.1"
+>>>>>>> 830faa586056f2758648c7cc1d3f38a0ee260f97
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "^2.2.2",
     "eslint": "^8.5.0",
     "eslint-plugin-vue": "^8.2.0",
-    "vite": "^2.8.4"
+    "vite": "^2.8.4",
+    "vue-stripe-js": "^1.0.0"
   }
 }
