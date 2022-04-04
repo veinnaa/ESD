@@ -14,13 +14,8 @@
     "sass": "^1.49.9",
     "vue": "^3.2.31",
     "vue-router": "^4.0.14",
-<<<<<<< HEAD
-    "vue-sweetalert": "^0.1.18",
-    "vue-sweetalert2": "^5.0.2"
-=======
     "vue-sweetalert2": "^5.0.2",
     "vue-use-stripe": "^0.1.1"
->>>>>>> 830faa586056f2758648c7cc1d3f38a0ee260f97
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "^2.2.2",
