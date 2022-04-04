@@ -2,7 +2,10 @@
   <div class="appointments-view">
     <h2>Upcoming Appointment</h2>
     <AppointmentCard class="appointment-card" />
-    <h2>All Appointments</h2>
+    <div class="header">
+      <h2>All Appointments</h2>
+      <h2><i class="bi bi-plus-lg" @click="openForm()"></i></h2>
+    </div>
     <table class="table table-bordered">
       <thead>
         <tr class="table-success">
@@ -71,6 +74,9 @@ export default {
   methods: {
     goToAppointment(x) {
       this.$router.push("/appointment/" + x);
+    },
+    openForm() {
+      this.$router.push("/form");
     },
     async getAppointmentDetails() {
       const response = await fetch("http://localhost:5002/booking")
