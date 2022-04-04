@@ -4,8 +4,10 @@
     <h1>Appointments</h1>
     <div>
       <ol >
+
         <li v-for="appointment, k in details" :key=k>
           {{appointment}}
+
           <button @click="goToAppointment(appointment['BookingID'])">Open</button>
         </li>
           
@@ -19,6 +21,7 @@
 var bookingURL = "http://localhost:5002/booking";
 export default {
   name: "AppointmentsView",
+
   components:{
 
   },

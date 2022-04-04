@@ -30,7 +30,7 @@ async function initialize() {
   const appearance = {
     theme: 'stripe',
   };
-  elements = stripe.elements({ appearance, clientSecret });
+  elements = stripe.elements({ appearance, clientSecret, amount });
 
   const paymentElement = elements.create("payment");
   paymentElement.mount("#payment-element");

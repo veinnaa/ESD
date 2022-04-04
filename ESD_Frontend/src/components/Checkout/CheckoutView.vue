@@ -13,12 +13,12 @@
 		</div>
 		<div class="d-flex justify-content-between">
 			<p class="mb-2">Total</p>
-			<p class="mb-2">{{ }}</p>
+			<p class="mb-2">{{ rate }}</p>
 		</div>
 
 		<div id = "app" class="d-flex justify-content-between">
 			<p class="mb-2">Doctor Name</p>
-			<p class="mb-2">{{ doctorID }}</p>
+			<p class="mb-2">{{ doctorName }}</p>
 		</div>
 
 		<div class="d-flex justify-content-between">
@@ -39,7 +39,8 @@
 
 <script>
 // import axios from "axios";
-var bookingURL = "http://localhost:5002/booking/1"
+var bookingURL = "http://localhost:5002/booking"
+var doctorURL = "http://localhost:5001/doctor"
 export default {
   name: "CheckoutView",
   // components: {
@@ -53,14 +54,13 @@ export default {
       rate: "",
       bookingID:this.$route.params.bookingID,
       specialization:""
+
     }
   },
   mounted() {
     this.getbooking();
-
   },
   created() {
-
   }
   ,
   methods: {
@@ -78,6 +78,7 @@ export default {
                   this.doctorName = data.data['DoctorName'],
                   this.rate = data.data['Rates'],
                   this.specialization = data.data['Specialisation']
+
                 })
             }
           )
@@ -85,10 +86,10 @@ export default {
             // Errors when calling the service; such as network error, 
             // service offline, etc
             console.log(this.message + error);
+
           })
-    },
-    reloadOnce() {
-      location.reload();
+    }
+
     }
   },
   // computed: {
@@ -98,7 +99,6 @@ export default {
   // },
 
 }
-
 </script>
 
 <style scoped lang="sass" src="./Checkout.sass"></style>

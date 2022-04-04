@@ -18,10 +18,12 @@
       </table>
       <button type="button" class="btn btn-primary" @click="goToCheckout(details['BookingID'])">Checkout</button>
     </div>
+
   </div>
 </template>
 
 <script>
+import AppointmentsView from "@/components/AppointmentsView";
 
 var bookingURL = "http://localhost:5002/booking"
 export default {
@@ -32,6 +34,7 @@ export default {
     return {
       details:"",
       bookingID:this.$route.params.bookingID
+
     };
   },
   mounted(){
