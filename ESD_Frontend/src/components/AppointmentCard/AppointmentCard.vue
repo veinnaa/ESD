@@ -3,18 +3,18 @@
     <div class="box container">
       <div class="row">
         <div class="sb1">
-          <div class="month">MARCH</div>
-          <div class="year">2022</div>
-          <div class="date">25</div>
-          <div class="day">Friday</div>
+          <div class="month">{{ month }}</div>
+          <div class="year">{{ year }}</div>
+          <div class="date">{{ date }}</div>
+          <div class="day">{{ day }}</div>
         </div>
       </div>
       <div class="row">
         <div class="sb2">
-          <div class="time">10.00am</div>
-          <div class="d">Zoom Link: https://Zoom5830</div>
-          <div class="doc">Dr. Sharon Ng</div>
-          <div class="category">Cardiologist</div>
+          <div class="time">{{ time }}</div>
+          <div class="d">Zoom Link: <a :href="zoomLink">{{ zoomLink }}</a></div>
+          <div class="doc">{{ doctorName }}</div>
+          <div class="category">{{ doctorSpec }}</div>
         </div>
       </div>
     </div>
@@ -29,9 +29,61 @@ export default {
   // components: {
   // },
   data() {
-    return {};
+    return {
+      details: {},
+      date: "",
+      month: "",
+      year: "",
+      day: "",
+      time: "",
+      zoomLink: "",
+      doctorName: "",
+      doctorSpec: "",
+      doctorID: "",
+      // doctorNameList: [],
+    };
   },
-  methods: {},
+  mounted() {
+    this.getAppointmentDetail()
+  },
+  methods: {
+    async getAppointmentDetail() {
+      const response = await fetch("http://localhost:5002/booking")
+        .then((response) => response.json())
+        .then((data) => {
+          // console.log(data);
+          this.detail = data.data["booking"][0];
+          let d = new Date(this.detail.DateTime)
+          this.date = d.getDate()
+          this.month = d.toLocaleString('en-us', { month: 'short' }).toUpperCase()
+          this.year = d.getFullYear()
+          this.day = d.toLocaleString('en-us', { weekday: 'long' })
+          this.time = d.toLocaleTimeString()
+
+          this.zoomLink = this.detail.ZoomID
+          console.log(this.zoomLink);
+          this.getDoctorInfo(this.detail.DoctorID)
+        })
+        .catch((error) => {
+          // Errors when calling the service; such as network error,
+          // service offline, etc
+          console.log("unable to get bookings" + error);
+        });
+    },
+    async getDoctorInfo(doctorID) {
+      const response = await fetch("http://localhost:5001/doctor/" + doctorID)
+        .then((response) => response.json())
+        .then((data) => {
+          // console.log(response);
+          this.doctorName = data.data["DoctorName"];
+          this.doctorSpec = data.data["Specialisation"]
+          // console.log(this.doctorName);
+        })
+        .catch((error) => {
+          console.log("unable to get doctor" + error);
+        });
+    },
+  },
 };
 </script>
 
