@@ -15,7 +15,7 @@
       </div>
 
     </div>
-    <button type="button" class="btn btn-primary next1">Submit </button>
+    <button type="button" class="btn btn-primary next1"><router-link style="text-decoration: none; color: White" to="/" >Submit</router-link></button>
 
     </form>
   </section>
