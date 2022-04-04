@@ -1,8 +1,23 @@
 <template>
   <div class="appointment-card">
-
-    <h1>Appointment</h1>
-
+    <div class="box container">
+      <div class="row">
+        <div class="sb1">
+          <div class="month">MARCH</div>
+          <div class="year">2022</div>
+          <div class="date">25</div>
+          <div class="day">Friday</div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="sb2">
+          <div class="time">10.00am</div>
+          <div class="d">Zoom Link: https://Zoom5830</div>
+          <div class="doc">Dr. Sharon Ng</div>
+          <div class="category">Cardiologist</div>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -14,11 +29,9 @@ export default {
   // components: {
   // },
   data() {
-    return {
-    };
+    return {};
   },
-  methods: {
-  },
+  methods: {},
 };
 </script>
 
