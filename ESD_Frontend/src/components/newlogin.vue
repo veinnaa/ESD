@@ -17,7 +17,7 @@
               <input type="submit" name="" value="Login" />
               <p className="signup">
                 Don't have an account ?
-                <a href="#" @click="$emit('toggleNewLogin', 'newlogin')">
+                <a href="#" @click="$emit('toggleNewRegister', 'newreg')">
                   Sign Up.
                 </a>
               </p>

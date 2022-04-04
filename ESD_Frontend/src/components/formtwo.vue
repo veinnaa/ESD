@@ -22,12 +22,18 @@
           <label for="formFileMultiple" class="form-label">Multiple files input example</label>
           <input class="form-control" type="file" id="formFileMultiple" multiple>
         </div>
+
         <div class="w-100">
           <label class="mt-3" for="datepicker-dateformat2">Choose Appointment Date </label>
           <br>
           <input type="date" id="appt" name="appt" style="width:100%" v-model="date">
         </div>
-        <!-- <br> -->
+        <label class="mt-3" for="datepicker-dateformat2">Doctors</label>
+        <div class="input-group mb-3 w-100" >
+          <select class="custom-select w-100" style="height: 28px" id="inputGroupSelect02">
+            <option selected v-for="(doc, i) in doctorList" :key="i"> {{doc.DoctorName}}</option>
+          </select>
+        </div>
       </div>
       </div>
     </form>
@@ -113,9 +119,31 @@ export default {
       allergies: 'sweat',
       symptoms: 'rashes',
       file: false,
-      date: '03/04/2022'
+      date: '03/04/2022',
+      doctors: ['Veinna Tio', 'Richie Chan', 'Adrian Poh', 'Zi Qing', 'Lim Shu Ying'],
+      doctorList: []
 
       }
+  },
+  mounted() {
+    this.getDoctorList()
+  },
+  methods:{
+    getDoctorList() {
+      const response = fetch("http://localhost:5001/doctor")
+        .then((response) => response.json())
+        .then((data) => {
+          console.log(response);
+          console.log(data);
+          this.doctorList = data.data.books;
+          console.log(this.doctorList);
+        })
+        .catch((error) => {
+          // Errors when calling the service; such as network error,
+          // service offline, etc
+          console.log("unable to get doctor" + error);
+        });
+    },
   }
 }
 

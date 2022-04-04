@@ -10,7 +10,7 @@
             <input type="submit" name="" value="Sign Up" />
             <p className="signup">
             Already have an account ?
-            <a href="#" @click="$emit('toggleNewRegister', 'newreg')">
+            <a href="#" @click="$emit('toggleNewLogin', 'newlogin')">
                 Sign in.
             </a>
             </p>
