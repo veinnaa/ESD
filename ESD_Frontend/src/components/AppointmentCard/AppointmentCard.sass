@@ -1,56 +1,41 @@
 @import '@/assets/sass/global.sass'
 
-// .appointment-card
-
-.box
-  background-color: #f0fcf9
-  width: 400px  
-  margin-left: 0px
-  border: 5px solid $nav
-  padding: 30px
-  margin-top: 20px
-  border-radius: 15px
-  display: flex
-  justify-content: space-between
-  .row
-    .sb1
-      border-right: 1px solid
-      display: flex
-      flex-direction: column
-      align-items: center
-      padding-right: 20px
-      .month
+.appointment-card
+  .box
+    background-color: #f0fcf9
+    width: 400px  
+    margin-left: 0px
+    border: 5px solid $nav
+    padding: 30px
+    margin-top: 20px
+    border-radius: 15px
+    display: flex
+    justify-content: space-between
+    .row
+      .sb1
+        border-right: 1px solid
+        display: flex
+        flex-direction: column
+        align-items: center
+        padding-right: 20px
+        .month
+          font-size: 15px
+        .date
+          font-size: 30px
+          color: $btn-text
+          font-weight: bold
+        .day
+          margin-top: 10px
+        
+      .sb2
+        display: flex
+        flex-direction: column
+        justify-content: space-between
+        align-items: flex-start
         font-size: 15px
-      .date
-        font-size: 30px
-        color: $btn-text
-        font-weight: bold
-      .day
-        margin-top: 10px
-      
-    .sb2
-      display: flex
-      flex-direction: column
-      justify-content: space-between
-      align-items: flex-start
-      font-size: 15px
-      margin-right: 15px
-      .time
-        font-weight: bold
-        font-size: 18px
-      .doc
-        margin-top: 15px
-  
-// .cancel
-//   font-size: 10px
-//   margin-left: 1px
-
-// @media only screen and (max-width: 990px) 
-//   .box
-//     width: 400px  
-//     .row
-//       .sb1
-//         padding-right: 20px
-
-//       .sb2
-//         margin-right: 15px
+        margin-right: 15px
+        .time
+          font-weight: bold
+          font-size: 18px
+        .doc
+          margin-top: 15px

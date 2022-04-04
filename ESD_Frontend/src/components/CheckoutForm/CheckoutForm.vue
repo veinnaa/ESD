@@ -247,7 +247,7 @@ export default {
         .catch((error) => {
           // Errors when calling the service; such as network error,
           // service offline, etc
-          console.log("unable to get doctor" + error);
+          console.log("unable to get doctor " + error);
         });
     },
   },

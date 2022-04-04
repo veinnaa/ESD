@@ -67,7 +67,7 @@ export default {
         .catch((error) => {
           // Errors when calling the service; such as network error,
           // service offline, etc
-          console.log("unable to get bookings" + error);
+          console.log("unable to get bookings " + error);
         });
     },
     async getDoctorInfo(doctorID) {
@@ -80,7 +80,7 @@ export default {
           // console.log(this.doctorName);
         })
         .catch((error) => {
-          console.log("unable to get doctor" + error);
+          console.log("unable to get doctor " + error);
         });
     },
   },
