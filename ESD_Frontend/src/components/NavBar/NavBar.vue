@@ -21,7 +21,6 @@
         <div class="navbar-nav">
           <router-link to="/" class="link nav-text" title="Home"> Home </router-link>
           <router-link to="/appointment" class="link nav-text" title="Explore recipe">Appointments</router-link>
-          <router-link to="/checkout" class="link nav-text" title="Explore recipe">Checkout</router-link>
 
           <router-link
             v-if="!this.loginStatus"

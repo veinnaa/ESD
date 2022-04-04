@@ -52,8 +52,7 @@ export default {
   },
   data() {
     return {
-      details : {
-      },
+      details : {},
       headerList: [
         "Date",
         "Appointment Zoom Link",
@@ -66,7 +65,7 @@ export default {
   },
   mounted() {
     const response = 
-      fetch(bookingURL)
+      fetch(this.bookingURL)
         .then(response=>response.json())
         .then(data => {
           this.details = data.data['booking'];

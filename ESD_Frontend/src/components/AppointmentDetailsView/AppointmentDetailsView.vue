@@ -32,8 +32,8 @@ export default {
   // },
   data() {
     return {
-      details:"",
-      bookingID:this.$route.params.bookingID
+      details: "",
+      bookingID: this.$route.params.bookingID
 
     };
   },
@@ -46,12 +46,6 @@ export default {
           this.details = data.data;
         })
   },
-
-  // computed: {
-  // },
-  // created() {
-
-  // }
   methods: {
     goToCheckout(x) {
       this.$router.push('/checkout/' + x);

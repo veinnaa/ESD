@@ -52,19 +52,15 @@ export default {
       doctorName:"",
       details: {},
       rate: "",
-      bookingID:this.$route.params.bookingID,
-      specialization:""
-
+      bookingID: this.$route.params.bookingID,
+      specialization: ""
     }
   },
   mounted() {
     this.getbooking();
   },
-  created() {
-  }
-  ,
   methods: {
-    getbooking: function(){
+    getbooking() {
       const response =
         fetch(bookingURL+'/'+this.bookingID)
           .then(response => response.json())
@@ -89,15 +85,12 @@ export default {
 
           })
     }
-
-    }
   },
   // computed: {
   //   hasBookings: function () {
   //     return this.data.booking.length > 0;
   //   }
   // },
-
 }
 </script>
 
