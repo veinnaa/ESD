@@ -14,15 +14,11 @@ export default {
   components: {
     AppointmentDetailsView
   },
-  data() {
-    return {
-      message: "no booking records",
-      doctorID: "",
-      details: {
-      }
-    };
-  },
-  mounted() {
-  }
 }
 </script>
+<style lang="sass" scoped>
+@import '@/assets/sass/global.sass'
+
+.details
+  min-height: 100vh
+</style>
