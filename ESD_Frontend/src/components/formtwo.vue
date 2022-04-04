@@ -9,11 +9,11 @@
       <div class="col-6 col1">
         <div class="form-group">
           <label for="exampleFormControlTextarea1">Allergies</label>
-          <textarea class="form-control" id="exampleFormControlTextarea1" rows="5"></textarea>
+          <textarea class="form-control" id="exampleFormControlTextarea1" rows="4" v-model="allergies"></textarea>
         </div>
         <div class="form-group">
           <label for="exampleFormControlTextarea2">Symptoms</label>
-          <textarea class="form-control" id="exampleFormControlTextarea1" rows="5"></textarea>
+          <textarea class="form-control" id="exampleFormControlTextarea1" rows="4" v-model="symptoms"></textarea>
         </div>
         
       </div>
@@ -25,10 +25,9 @@
         <div class="w-100">
           <label class="mt-3" for="datepicker-dateformat2">Choose Appointment Date </label>
           <br>
-          <input type="date" id="appt" name="appt" style="width:100%">
+          <input type="date" id="appt" name="appt" style="width:100%" v-model="date">
         </div>
-        <br>
-        <button type="button" class="btn btn-primary next1">Next </button>
+        <!-- <br> -->
       </div>
       </div>
     </form>
@@ -41,6 +40,8 @@
     <button type="button" class="position-absolute top-0 start-50 translate-middle btn btn-sm btn-primary rounded-pill" style="width: 2rem; height:2rem;">2</button>
     <button type="button" class="position-absolute top-0 start-100 translate-middle btn btn-sm btn-secondary rounded-pill" style="width: 2rem; height:2rem;">3</button>
   </div>
+     <button type="button" class="btn btn-primary next1">Next </button>     
+
 </div>
 
 </template>
@@ -93,12 +94,29 @@ label{
 .prog1{
   margin-left: auto;
   margin-right:auto; 
-  /* margin-top: 3%; */
+  margin-top: 3%;
   width: 75%;
 }
 
 .next1{
   float: right;
-  margin-top: 140px;
+  margin-right: 50px;
+  margin-top: 15px;
 }
 </style>
+
+<script>
+
+export default {
+  data(){
+    return {    
+      allergies: 'sweat',
+      symptoms: 'rashes',
+      file: false,
+      date: '03/04/2022'
+
+      }
+  }
+}
+
+</script>

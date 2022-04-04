@@ -10,6 +10,7 @@ import FormTwo from "../components/formtwo.vue"
 
 
 export default {
+
   name: 'form2',
   components: {
     // AppointmentsView

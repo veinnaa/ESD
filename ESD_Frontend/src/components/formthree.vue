@@ -7,43 +7,16 @@
   <section class="section" id="personalDetails">
     <form>
     <div class="row row1">
-      <div class="col-6 col1">
+      <div class="col-6 col1" v-for="(time, i) in schedule" :key="i">
         <div class="form-group timeslot">
-          <label for="exampleInputEmail1">10:00 AM</label>
+          <label for="exampleInputEmail1">{{time}}</label>
         </div>
-        <div class="form-group timeslot">
-          <label for="exampleInputEmail1">10:30 AM</label>
-        </div>
-        <div class="form-group timeslot">
-          <label for="exampleInputEmail1">11:00 AM</label>
-        </div>
-        <div class="form-group timeslot">
-          <label for="exampleInputEmail1">11:30 AM</label>
-        </div>
-        <div class="form-group timeslot">
-          <label for="exampleInputEmail1">12:00 PM</label>
-        </div>
-      </div>
-      <div class="col-6 col2">
-        <div class="form-group timeslot">
-          <label for="exampleInputEmail1">12:30 PM</label>
-        </div>
-        <div class="form-group timeslot">
-          <label for="exampleInputEmail1">13:00 PM</label>
-        </div>
-        <div class="form-group timeslot">
-          <label for="exampleInputEmail1">13:30 PM</label>
-        </div>
-        <div class="form-group timeslot">
-          <label for="exampleInputEmail1">14:00 PM</label>
-        </div>
-        <div class="form-group timeslot">
-          <label for="exampleInputEmail1">14:30 PM</label>
-        </div>
-        <button type="button" class="btn btn-primary next1">Submit </button>
         
       </div>
+
     </div>
+    <button type="button" class="btn btn-primary next1">Submit </button>
+
     </form>
   </section>
     <div class="position-relative prog1" >
@@ -84,9 +57,6 @@
 
 .col1{
   padding-left: 5%;
-}
-
-.col2{
   padding-right: 5%;
 }
 
@@ -102,13 +72,14 @@ label{
 .prog1{
   margin-left: auto;
   margin-right:auto; 
-  /* margin-top: 0%; */
-  width: 50%;
+  margin-top: 5%;
+  width: 60%;
 }
 
 .next1{
   float: right;
-  margin-top: 5%;
+  margin-top: 3.5%;
+  margin-right: 5%;
 }
 
 .timeslot{
@@ -124,3 +95,16 @@ label{
   margin-left: 50px;
 }
 </style>
+
+<script>
+
+export default {
+  data(){
+    return {    
+      schedule: ['10:00 AM', '10:30 AM', '11:00 AM', '11:30 AM', '12:00 PM', '12:30 PM','13:00 PM','13:30 PM','14:00 PM', '14:30 PM' ]
+      
+      }
+  }
+}
+
+</script>

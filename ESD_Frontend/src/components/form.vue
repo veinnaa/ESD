@@ -49,7 +49,6 @@
             <label class="form-check-label" for="inlineRadio2"> Male</label>
           </div>
           <br>
-          <button type="button" class="btn btn-primary next1">Next </button>
         </div>
       </div>
     </form>
@@ -62,6 +61,8 @@
     <button type="button" class="position-absolute top-0 start-50 translate-middle btn btn-sm btn-secondary rounded-pill" style="width: 2rem; height:2rem;">2</button>
     <button type="button" class="position-absolute top-0 start-100 translate-middle btn btn-sm btn-secondary rounded-pill" style="width: 2rem; height:2rem;">3</button>
   </div>
+  <button type="button" class="btn btn-primary next1">Next </button>
+
 </div>
 
 </template>
@@ -114,11 +115,14 @@ label{
 .prog1{
   margin-left: auto;
   margin-right:auto; 
+  margin-top: 2.5%;
   width: 75%;
 }
 
 .next1{
   float: right;
+  margin-top: 15px;
+  margin-right: 50px;
 }
 
 
