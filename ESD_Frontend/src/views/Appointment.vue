@@ -9,7 +9,7 @@
 <script>
 // @ is an alias to /src
 import AppointmentsView from '@/components/AppointmentsView'
-var bookingURL = "http://localhost:5002/booking"
+
 export default {
   name: 'explore',
   components: {

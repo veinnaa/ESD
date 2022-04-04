@@ -23,7 +23,7 @@
 
 		<div class="d-flex justify-content-between">
 			<p class="mb-2">Specialization</p>
-			<p class="mb-2">Physiology</p>
+			<p class="mb-2">{{ specialization }}</p>
 		</div>
 
 		<button id="submit">
@@ -44,36 +44,61 @@ export default {
   name: "CheckoutView",
   // components: {
   // },
+  data() {
+    return {
+      message: "no booking records",
+      doctorID: "",
+      doctorName:"",
+      details: {},
+      rate: "",
+      bookingID:this.$route.params.bookingID,
+      specialization:""
+    }
+  },
+  mounted() {
+    this.getbooking();
+
+  },
+  created() {
+
+  }
+  ,
   methods: {
+    getbooking: function(){
+      const response =
+        fetch(bookingURL+'/'+this.bookingID)
+          .then(response => response.json())
+          .then(data => {
+            this.details = data.data;
+            this.doctorID = data.data['DoctorID'];
+            const resp = 
+              fetch(doctorURL + "/" + this.doctorID)
+                .then(resp => resp.json())
+                .then(data => {
+                  this.doctorName = data.data['DoctorName'],
+                  this.rate = data.data['Rates'],
+                  this.specialization = data.data['Specialisation']
+                })
+            }
+          )
+          .catch(error => {
+            // Errors when calling the service; such as network error, 
+            // service offline, etc
+            console.log(this.message + error);
+          })
+    },
+    reloadOnce() {
+      location.reload();
+    }
   },
   // computed: {
   //   hasBookings: function () {
   //     return this.data.booking.length > 0;
   //   }
   // },
-  data() {
-    return {
-      message: "no booking records",
-      doctorID: "",
-      details: {}
-    };
-  },
-  mounted(){
-    const response =
-      fetch(bookingURL)
-        .then(response => response.json())
-        .then(data => {
-          console.log(response);
-          this.details = data.data;
-          }
-        )
-        .catch(error => {
-          // Errors when calling the service; such as network error, 
-          // service offline, etc
-          console.log(this.message + error);
-        });
-  }
-};
+
+}
+
 </script>
 
 <style scoped lang="sass" src="./Checkout.sass"></style>

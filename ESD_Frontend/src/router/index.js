@@ -35,7 +35,7 @@ const routes = [
     component: AppointmentDetails
   },
   {
-    path: '/checkout',
+    path: '/checkout/:bookingID',
     name: 'Checkout',
     component: Checkout
   }

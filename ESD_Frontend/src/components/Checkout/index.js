@@ -11,8 +11,13 @@ initialize();
 checkStatus();
 
 setTimeout(() => {document
-  .querySelector("#payment-form")
-  .addEventListener("submit", handleSubmit)}, 3000);
+  .querySelector("#payment-form")}, 4000);
+
+if (document
+  .querySelector("#payment-form")){
+    document
+    .querySelector("#payment-form")
+    .addEventListener("submit", handleSubmit)};
 
 // Fetches a payment intent and captures the client secret
 async function initialize() {
@@ -21,7 +26,7 @@ async function initialize() {
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ items }),
   });
-  const { clientSecret } = await response.json();
+  const { clientSecret, amount } = await response.json();
   const appearance = {
     theme: 'stripe',
   };
@@ -87,32 +92,38 @@ async function checkStatus() {
 
 // ------- UI helpers -------
 
-// function showMessage(messageText) {
-//   const messageContainer = setTimeout(()=>{
-//     document.querySelector("#payment-message")},3000);
+function showMessage(messageText) {
+  const messageContainer = setTimeout(()=>{
+    document.querySelector("#payment-message")},3000);
 
-//   messageContainer.classList.remove("hidden");
-//   messageContainer.textContent = messageText;
+  setTimeout(()=> {messageContainer.classList.remove("hidden"), messageContainer.textContent = messageText}, 3000);
+  // messageContainer.textContent = messageText;
 
-//   setTimeout(function () {
-//     messageContainer.classList.add("hidden");
-//     messageText.textContent = "";
-//   }, 4000);
-// }
+  setTimeout(function () {
+    messageContainer.classList.add("hidden");
+    messageText.textContent = "";
+  }, 4000);
+}
 
-// // Show a spinner on payment submission
-// function setLoading(isLoading) {
-//   if (isLoading) {
-//     // Disable the button and show a spinner
-//     document.querySelector("#submit").disabled = true;
-//     document.querySelector("#spinner").classList.remove("hidden");
-//     document.querySelector("#button-text").classList.add("hidden");
-//   } else {
-//     document.querySelector("#submit").disabled = false;
-//     document.querySelector("#spinner").classList.add("hidden");
-//     document.querySelector("#button-text").classList.remove("hidden");
-//   }
-// }
+// Show a spinner on payment submission
+function setLoading(isLoading) {
+  if (isLoading) {
+    // Disable the button and show a spinner
+    setTimeout(()=> {document.querySelector("#submit").disabled = true,
+    document.querySelector("#spinner").classList.remove("hidden"),
+    document.querySelector("#button-text").classList.add("hidden")},3000)
+    // document.querySelector("#submit").disabled = true;
+    // document.querySelector("#spinner").classList.remove("hidden");
+    // document.querySelector("#button-text").classList.add("hidden");
+  } else {
+    setTimeout(()=> {document.querySelector("#submit").disabled = false,
+    document.querySelector("#spinner").classList.add("hidden"),
+    document.querySelector("#button-text").classList.remove("hidden")},3000)
+    // document.querySelector("#submit").disabled = false;
+    // document.querySelector("#spinner").classList.add("hidden");
+    // document.querySelector("#button-text").classList.remove("hidden");
+  }
+}
 
 
 export { default } from './CheckoutView.vue'
