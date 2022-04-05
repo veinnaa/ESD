@@ -9,6 +9,10 @@
       <div class="row row1">
         <div class="col-6 col1">
           <div class="form-group">
+            <label for="exampleInputEmail1">BookingID</label>
+            <input disabled type="text" class="form-control" id="bookingID"  name="bookingID" aria-describedby="emailHelp" v-model="this.bookingID">
+          </div>
+          <div class="form-group">
             <label for="exampleInputEmail1">Name</label>
             <input type="text" class="form-control" id="PatientName"  name="PatientName" aria-describedby="emailHelp" placeholder="Enter FullName (As of NRIC)">
           </div>
@@ -30,7 +34,7 @@
           </div>
           <div class="form-group">
             <label for="exampleInputPassword1">Citizenship</label>
-            <input type="text" class="form-control" id="citizenship" name="citizenship" placeholder="eg. Singaporean">
+            <input type="text" class="form-control" id="Citizenship" name="Citizenship" placeholder="eg. Singaporean">
           </div>
           <div class="form-group">
             <label for="exampleInputEmail1">Contact No.</label>
@@ -49,9 +53,14 @@
           </div>
           <div class="form-group">
             <label for="exampleFormControlTextarea2">Symptoms</label>
-            <textarea class="form-control" id="symptoms" name="symptoms" rows="4" v-model="symptoms"></textarea>
+            <textarea class="form-control" id="PatientSymptoms" name="PatientSymptoms" rows="4" v-model="symptoms"></textarea>
           </div>
-          
+          <div class="form-group">
+            <label for="exampleFormControlTextarea2">DoctorID:  </label>
+            <select class="custom-select w-100" id="DoctorID"  v-for="(doc, i) in doctToSpecialisation[specialisation]" :key="i" name="DoctorID" aria-describedby="emailHelp"  v-model="doctorID">
+              <option v-if="doc[0]==this.chosenID">{{doc[1]}}</option>
+            </select>
+          </div>
         </div>
         <div class="col-6 col2">
           <div class="w-100">
@@ -70,18 +79,18 @@
           <label class="mt-3">Specialisation</label>
           <div class="input-group mb-3 w-100" >
             <select class="custom-select w-100" name="Specialisation" style="height: 28px" id="DoctorName" v-model=specialisation>
-              <option selected v-for="(doc, i) in doctToSpecialisation" :key="i"> {{i}}</option>
+              <option selected v-for="(doc, i) in doctToSpecialisation" :key="i">{{i}}</option>
             </select>
           </div>
 
           <label class="mt-3">Doctors</label>
           <div class="input-group mb-3 w-100" >
-            <select class="custom-select w-100" name="DoctorName" style="height: 28px" id="DoctorName" v-model="chosen">
-              <option selected v-for="(doc, i) in doctToSpecialisation[specialisation]" :key="i"> {{doc}} 
+            <select class="custom-select w-100" name="DoctorName" style="height: 28px" id="DoctorName" v-model="chosenID">
+              <option selected v-for="(doc, i) in doctToSpecialisation[specialisation]" :key="i"> {{doc[0]}}
               </option>
-              
             </select>
           </div>
+
 
 
         </div>
@@ -101,8 +110,9 @@
 
 export default {
   data(){
-    return {    
-      schedule: ['10:00 AM', '10:30 AM', '11:00 AM', '11:30 AM', '12:00 PM', '12:30 PM','13:00 PM','13:30 PM','14:00 PM', '14:30 PM' , '15:00 PM', '15:30 PM', '16:00 PM', '16:30 PM', '17:00 PM'],
+    return { 
+      bookingID: "",
+      schedule: ['10:00:00', '10:30:00', '11:00:00', '11:30:00', '12:00:00', '12:30:00','13:00:00','13:30:00','14:00:00', '14:30:00' , '15:00:00', '15:30:00', '16:00:00', '16:30:00', '17:00:00'],
       allergies: '',
       symptoms: '',
       date: '',
@@ -119,17 +129,37 @@ export default {
   },
   mounted() {
     document.querySelector("form").addEventListener('submit', this.handleSubmit);
-    this.getDoctorList()
+    this.getDoctorList();
+    this.getBookings();
   },
   methods: {
+    getBookings(){
+      fetch("http://localhost:5002/booking")
+        .then(response => response.json())
+        .then(data => {
+          this.bookingID = data.data.booking.length + 1;
+        })
+    },
     handleSubmit: function(event){
       event.preventDefault()
       const data = new FormData(event.target)
-      const value = Object.fromEntries(data.entries());
-      console.log(JSON.stringify(value))
+      var value = Object.fromEntries(data.entries());
       console.log(value);
-      
-      this.$router.push("/");
+      value.bookingID = this.bookingID;
+      value.doctorID = this.doctorID;
+      value = JSON.stringify(value);
+      fetch("http://localhost:5003/make_appointment", {
+        headers:
+        {
+          "Content-type": "application/json"
+        },
+        method: "POST",
+        body: value
+      }).then(response => response.json())
+      .then(data=>{
+        console.log(data)
+      })
+      // this.$router.push("/");
     },
 
     getDoctorList() {

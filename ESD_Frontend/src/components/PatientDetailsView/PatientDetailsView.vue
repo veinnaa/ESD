@@ -74,7 +74,7 @@ export default {
     // },
     getPatientInfo() {
       const response = fetch(
-        "http://localhost:5000/patient/" + this.patientID
+        "http://localhost:5004/patient/" + this.patientID
       )
         .then((response) => response.json())
         .then((data) => {

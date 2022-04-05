@@ -63,7 +63,7 @@ export default {
         uRL = "http://localhost:5002/booking/patient/";
         id = this.patientID;
       }
-      console.log(uRL + id)
+
       const response = await fetch(uRL + id)
         .then((response) => response.json())
         .then((data) => {
@@ -99,7 +99,7 @@ export default {
         });
     },
     async getPatientInfo(ICNo) {
-      const response = await fetch("http://localhost:5000/patient" + "/" + ICNo)
+      const response = await fetch("http://localhost:5004/patient" + "/" + ICNo)
         .then(response => response.json())
         .then(data => {
           this.patientName = data.data["PatientName"];

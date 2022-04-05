@@ -48,7 +48,7 @@
 
 <script>
 import AppointmentCard from "@/components/AppointmentCard";
-
+var bookingURL = "http://localhost:5002/booking"
 var doctorURL = "http://localhost:5001/doctor"
 export default {
   name: "AppointmentsView",

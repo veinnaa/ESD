@@ -90,7 +90,7 @@ export default {
     },
     async getPatientName(patientICNo) {
       const response = await fetch(
-        "http://localhost:5000/patient/" + patientICNo
+        "http://localhost:5004/patient/" + patientICNo
       )
         .then((response) => response.json())
         .then((data) => {

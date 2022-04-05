@@ -119,7 +119,7 @@
 </template>
 
 <script>
-var patientURL = "http://localhost:5000/patient/getAll"
+var patientURL = "http://localhost:5004/patient/getAll"
 var doctorURL = "http://localhost:5001/doctor"
 
 export default {
