@@ -31,8 +31,6 @@
 <script>
 export default {
   name: "AppointmentDetailsView",
-  // methods: {
-  // },
   data() {
     return {
       detail: [],
