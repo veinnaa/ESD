@@ -33,7 +33,7 @@
             Pending confirmation
           </td>
           <td v-else>Confirmed</td>
-          <td><button class="bi bi-trash-fill text-danger" @click="cancelAppointment(appointment['BookingID'])"></button></td>
+          <td><button class="bi bi-trash-fill text-danger" @click="confirming(appointment['BookingID'])"></button></td>
           <td v-if="appointment.PaymentStatus == false">
             <i class="bi bi-credit-card-fill text-primary" @click="goToAppointment(appointment['BookingID'])"></i>
           </td>

@@ -16,7 +16,7 @@
           <div class="time">{{ time }}</div>
           <div class="d"><a :href="zoomLink">{{ zoomLink }}</a></div>
           <div class="patient"> Patient: {{ patientName }} </div>
-          <div class="doc"> Dcotor: {{ doctorName }}</div>
+          <div class="doc"> Doctor: {{ doctorName }}</div>
           <div class="category">{{ doctorSpec }}</div>
         </div>
       </div>
@@ -47,29 +47,22 @@ export default {
   },
   methods: {
     async getAppointmentDetail() {
-      const response = await fetch("http://192.168.0.199:5002/booking")
+      const response = await fetch("http://localhost:5002/booking")
         .then((response) => response.json())
         .then((data) => {
-          // console.log(data);
-          for (let i = 0; i < data.data["booking"].length; i++) {
-            if (data.data["booking"][i].AcceptanceStatus == true) {
-              this.detail = data.data["booking"][i];
-              break;
-            } else {
-              this.detail = "NIL";
-            }
-          }
+          this.details = data.data.booking[0]
 
-          let d = new Date(this.detail.DateTime)
+          let d = new Date(this.details.DateTime)
           this.date = d.getDate()
           this.month = d.toLocaleString('en-us', { month: 'short' }).toUpperCase()
           this.year = d.getFullYear()
           this.day = d.toLocaleString('en-us', { weekday: 'long' })
           this.time = d.toLocaleTimeString()
 
-          this.zoomLink = this.detail.ZoomID
-          this.getDoctorInfo(this.detail.DoctorID)
-          this.getPatientInfo(this.detail.PatientID)
+          console.log(this.details.ICNo)
+          this.zoomLink = this.details.ZoomID
+          this.getDoctorInfo(this.details.DoctorID)
+          this.getPatientInfo(this.details.ICNo)
         })
         .catch((error) => {
           // Errors when calling the service; such as network error,
@@ -78,7 +71,7 @@ export default {
         });
     },
     async getDoctorInfo(doctorID) {
-      const response = await fetch("http://192.168.0.199:5001/doctor/" + doctorID)
+      const response = await fetch("http://localhost:5001/doctor" + "/" + doctorID)
         .then((response) => response.json())
         .then((data) => {
           // console.log(response);
@@ -90,11 +83,10 @@ export default {
           console.log("unable to get doctor " + error);
         });
     },
-    async getPatientInfo(patientID) {
-      const response = await fetch("http://192.168.0.199:5000/patient/" + patientID)
-        .then((response) => response.json())
-        .then((data) => {
-          // console.log(response);
+    async getPatientInfo(ICNo) {
+      const response = await fetch("http://localhost:5000/patient" + "/" + ICNo)
+        .then(response => response.json())
+        .then(data => {
           this.patientName = data.data["PatientName"];
           // console.log(this.doctorName);
         })

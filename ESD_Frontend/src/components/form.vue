@@ -106,7 +106,6 @@ export default {
       allergies: '',
       symptoms: '',
       date: '',
-      doctors: ['Veinna Tio', 'Richie Chan', 'Adrian Poh', 'Zi Qing', 'Lim Shu Ying'],
       doctorList: [],
       doctToSpecialisation: 
                     {
