@@ -57,12 +57,12 @@
           <div class="w-100">
             <label class="mt-3" for="datepicker-dateformat2">Choose Appointment Date </label>
             <br>
-            <input type="date" id="ApptDate" name="ApptDate" style="width:100%" v-model="date">
+            <input type="date" id="ApptDate" name="Date" style="width:100%" v-model="date">
           </div>
 
           <label class="mt-3" for="datepicker-dateformat2">Choose your Timeslot</label>
           <div class="input-group mb-3 w-100" >
-            <select class="custom-select w-100" name="ApptTime" style="height: 28px" id="ApptTime">
+            <select class="custom-select w-100" name="Time" style="height: 28px" id="ApptTime">
               <option selected v-for="(time, i) in schedule" :key="i"> {{time}}</option>
             </select>
           </div>
