@@ -52,7 +52,7 @@ export default {
     },
     async getAppointmentDetail() {
       const response = await fetch(
-        "http://localhost:5002/booking/" + this.bookingID
+        "http://192.168.0.199:5002/booking/" + this.bookingID
       )
         .then((response) => response.json())
         .then((data) => {
@@ -78,7 +78,7 @@ export default {
         });
     },
     async getDoctorName(doctorID) {
-      const response = await fetch("http://localhost:5001/doctor/" + doctorID)
+      const response = await fetch("http://192.168.0.199:5001/doctor/" + doctorID)
         .then((response) => response.json())
         .then((data) => {
           // console.log(response);

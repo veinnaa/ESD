@@ -1,5 +1,7 @@
 <template>
   <div class="appointment-card">
+    <div v-if="this.detail == 'NIL'">No upcoming appointment</div>
+    <div v-else-if="detail == ''">No upcoming appointment</div>
     <div class="box container">
       <div class="row">
         <div class="sb1">
@@ -22,15 +24,11 @@
 </template>
 
 <script>
-// import axios from "axios";
-
 export default {
   name: "AppointmentCard",
-  // components: {
-  // },
   data() {
     return {
-      details: {},
+      details: [],
       date: "",
       month: "",
       year: "",
@@ -40,7 +38,6 @@ export default {
       doctorName: "",
       doctorSpec: "",
       doctorID: "",
-      // doctorNameList: [],
     };
   },
   mounted() {
@@ -48,11 +45,19 @@ export default {
   },
   methods: {
     async getAppointmentDetail() {
-      const response = await fetch("http://localhost:5002/booking")
+      const response = await fetch("http://192.168.0.199:5002/booking")
         .then((response) => response.json())
         .then((data) => {
           // console.log(data);
-          this.detail = data.data["booking"][0];
+          for (let i = 0; i < data.data["booking"].length; i++) {
+            if (data.data["booking"][i].AcceptanceStatus == true) {
+              this.detail = data.data["booking"][i];
+              break;
+            } else {
+              this.detail = "NIL";
+            }
+          }
+
           let d = new Date(this.detail.DateTime)
           this.date = d.getDate()
           this.month = d.toLocaleString('en-us', { month: 'short' }).toUpperCase()
@@ -71,7 +76,7 @@ export default {
         });
     },
     async getDoctorInfo(doctorID) {
-      const response = await fetch("http://localhost:5001/doctor/" + doctorID)
+      const response = await fetch("http://192.168.0.199:5001/doctor/" + doctorID)
         .then((response) => response.json())
         .then((data) => {
           // console.log(response);

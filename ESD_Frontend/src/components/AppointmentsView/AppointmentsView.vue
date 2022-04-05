@@ -32,20 +32,26 @@
           <td v-if="appointment.AcceptanceStatus == null">
             Pending confirmation
           </td>
-          <td v-else>Confirmed</td>
+          <td v-else-if="appointment.AcceptanceStatus == true">Accepted</td>
+          <td v-else>Declined</td>
+
+          <td v-if="appointment.AcceptanceStatus == false">N.A.</td>
+          <td v-else-if="appointment.PaymentStatus == false">
+            <i
+              class="bi bi-credit-card-fill text-primary"
+              @click="goToAppointment(appointment['BookingID'])"
+            ></i>
+          </td>
+          <td v-else-if="appointment.PaymentStatus == true">
+            <i class="bi bi-check-circle-fill text-success"></i>
+          </td>
+
           <td>
             <i
               class="bi bi-trash-fill text-danger"
               @click="confirming(appointment['BookingID'])"
             ></i>
           </td>
-          <td v-if="appointment.PaymentStatus == false">
-            <i
-              class="bi bi-credit-card-fill text-primary"
-              @click="goToAppointment(appointment['BookingID'])"
-            ></i>
-          </td>
-          <td v-else><i class="bi bi-check-circle-fill text-success"></i></td>
         </tr>
       </tbody>
     </table>
@@ -73,8 +79,8 @@ export default {
         "Appointment Link",
         "Doctor",
         "Status",
-        "Cancel?",
         "Checkout",
+        "Cancel?",
       ],
     };
   },
@@ -103,7 +109,7 @@ export default {
     },
     async cancelAppointment(bookingID) {
       const response = await fetch(
-        "http://localhost:5002/booking/" + bookingID,
+        "http://192.168.0.199:5002/booking/" + bookingID,
         {
           method: "DELETE",
         }
@@ -114,9 +120,9 @@ export default {
           this.$swal({
             icon: "success",
             title: "You've cancelled successfully!",
-            showConfirmButton: false
+            showConfirmButton: false,
           });
-          location.reload()
+          location.reload();
         })
         .catch((error) => {
           console.log("unable to delete booking " + error);
@@ -126,7 +132,7 @@ export default {
       this.$router.push("/form");
     },
     async getAppointmentDetails() {
-      const response = await fetch("http://localhost:5002/booking")
+      const response = await fetch("http://192.168.0.199:5002/booking")
         .then((response) => response.json())
         .then((data) => {
           // console.log(data);
@@ -152,7 +158,9 @@ export default {
       }
     },
     async getDoctorName(doctorID) {
-      const response = await fetch("http://localhost:5001/doctor/" + doctorID)
+      const response = await fetch(
+        "http://192.168.0.199:5001/doctor/" + doctorID
+      )
         .then((response) => response.json())
         .then((data) => {
           // console.log(response);
