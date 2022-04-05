@@ -84,7 +84,6 @@ export default {
         .then((data) => {
           // console.log(data);
           this.details = data.data["booking"];
-          console.log(this.details);
         })
         .catch((error) => {
           // Errors when calling the service; such as network error,
@@ -94,11 +93,9 @@ export default {
 
       for (let i = 0; i < this.details.length; i++) {
         await this.getDoctorName(this.details[i].DoctorID);
-        console.log(this.details[i].DateTime)
         let date = new Date(this.details[i].DateTime)
         this.dateList.push([date.toLocaleDateString(), date.toLocaleTimeString()])
         this.doctorNameList.push(this.doctorName);
-        console.log(this.dateList);
       }
     },
     async getDoctorName(doctorID) {

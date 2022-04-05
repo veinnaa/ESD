@@ -151,7 +151,7 @@ export default {
             timer: 1400,
           });
           sessionStorage.setItem("PatientID", this.email);
-          this.$router.push("/profile");
+          this.$router.push("/");
       } else {
             this.$swal({
             icon: "error",

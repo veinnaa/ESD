@@ -63,7 +63,6 @@ export default {
           this.time = d.toLocaleTimeString()
 
           this.zoomLink = this.detail.ZoomID
-          console.log(this.zoomLink);
           this.getDoctorInfo(this.detail.DoctorID)
           this.getPatientInfo(this.detail.PatientID)
         })
