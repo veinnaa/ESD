@@ -127,8 +127,12 @@ export default {
           // Make sure to change this to your payment completion page
           return_url: "http://localhost:3000/index.html",
         },
+      });
+      fetch("http://localhost:5002/booking/payment/"+this.bookingID, {
+        method: "PUT"
       })
-      console.log("hllow");
+        .then(response=>response.json());
+
       // if (error.type === "card_error" || error.type === "validation_error") {
       //   this.showMessage(error.message);
       // } else {
