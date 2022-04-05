@@ -70,6 +70,8 @@
 <script>
 import AppointmentCard from "@/components/AppointmentCard";
 
+var bookingURL = "http://localhost:5002/booking"
+var doctorURL = "http://localhost:5001/doctor"
 export default {
   name: "AppointmentsView",
   components: {
@@ -180,15 +182,14 @@ export default {
           this.cancelAppointment(bookingID);
         }
       });
-    },
-    async cancelAppointment(bookingID) {
-      const response = await fetch(
-        "http://localhost:5002/booking/" + bookingID,
-        {
-          method: "DELETE",
+    },    
+
+    cancelAppointment(x){
+      const response = fetch(bookingURL + "/" + x,{
+          method: "DELETE"
         }
       )
-        .then((response) => response.json())
+        .then(response=>response.json())
         .then((res) => {
           console.log(res);
           this.$swal({
@@ -201,17 +202,18 @@ export default {
         .catch((error) => {
           console.log("unable to delete booking " + error);
         });
-    },
+    },  
+
     openForm() {
       this.$router.push("/form");
     },
+
     async getAppointmentDetails() {
-      const response = await fetch("http://localhost:5002/booking")
+      const response = await fetch(bookingURL)
         .then((response) => response.json())
         .then((data) => {
           console.log(data);
           this.details = data.data["booking"];
-          console.log(this.details);
         })
         .catch((error) => {
           // Errors when calling the service; such as network error,

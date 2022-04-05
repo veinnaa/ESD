@@ -5,67 +5,159 @@
   </div>
   <section class="section" id="personalDetails">
     <form>
-    <div class="row row1">
-      <div class="col-6 col1">
-        <div class="form-group">
-          <label for="exampleInputEmail1">Name</label>
-          <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email">
+    
+      <div class="row row1">
+        <div class="col-6 col1">
+          <div class="form-group">
+            <label for="exampleInputEmail1">Name</label>
+            <input type="text" class="form-control" id="PatientName"  name="PatientName" aria-describedby="emailHelp" placeholder="Enter FullName (As of NRIC)">
+          </div>
+          <div class="form-group">
+            <label for="exampleInputPassword1">NRIC No./Passport No.</label>
+            <input type="text" class="form-control" id="ICNo" name="ICNo" placeholder="NRIC No.">
+          </div>
+          <div class="form-group">
+            <label for="exampleInputEmail1">Date of Birth</label>
+            <input type="date" class="form-control" id="PatientDOB" name="PatientDOB" aria-describedby="emailHelp" placeholder="DD/MM/YYYY">
+          </div>
+
         </div>
-        <div class="form-group">
-          <label for="exampleInputPassword1">NRIC No./Passport No.</label>
-          <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
-        </div>
-        <div class="form-group">
-          <label for="exampleInputEmail1">Date of Birth</label>
-          <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email">
-        </div>
-        <div class="form-group">
-          <label for="exampleInputPassword1">Age</label>
-          <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
-        </div>
-        
-      </div>
-      <div class="col-6 col2">
-        <div class="form-group">
+
+        <div class="col-6 col2">
+          <div class="form-group">
             <label for="exampleInputEmail1">Address</label>
-            <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email">
+            <input type="text" class="form-control" id="PatientAddress" name="PatientAddress" aria-describedby="emailHelp" placeholder="Address">
           </div>
           <div class="form-group">
             <label for="exampleInputPassword1">Citizenship</label>
-            <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
+            <input type="text" class="form-control" id="citizenship" name="citizenship" placeholder="eg. Singaporean">
           </div>
           <div class="form-group">
             <label for="exampleInputEmail1">Contact No.</label>
-            <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email">
-          </div>
-          <label for="exampleInputEmail1">Address</label>
-          <br>
-          <div class="form-check form-check-inline">
-            <input class="form-check-input r1" type="radio" name="inlineRadioOptions" id="inlineRadio1" value="option1">
-            <label class="form-check-label" for="inlineRadio1">Female</label>
-          </div>
-          <div class="form-check form-check-inline">
-            <input class="form-check-input r2" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option2">
-            <label class="form-check-label" for="inlineRadio2"> Male</label>
+            <input type="text" class="form-control" id="PatientPhonetNo" name="PatientPhoneNo" aria-describedby="emailHelp" placeholder="xxxxxxxx">
           </div>
           <br>
         </div>
       </div>
+
+  
+      <div class="row row1">
+        <div class="col-6 col1">
+          <div class="form-group">
+            <label for="exampleFormControlTextarea1">Allergies</label>
+            <textarea class="form-control" id="PatientAllergies" name="PatientAllergies" rows="4" v-model="allergies"></textarea>
+          </div>
+          <div class="form-group">
+            <label for="exampleFormControlTextarea2">Symptoms</label>
+            <textarea class="form-control" id="symptoms" name="symptoms" rows="4" v-model="symptoms"></textarea>
+          </div>
+          
+        </div>
+        <div class="col-6 col2">
+          <div class="w-100">
+            <label class="mt-3" for="datepicker-dateformat2">Choose Appointment Date </label>
+            <br>
+            <input type="date" id="ApptDate" name="Date" style="width:100%" v-model="date">
+          </div>
+
+          <label class="mt-3" for="datepicker-dateformat2">Choose your Timeslot</label>
+          <div class="input-group mb-3 w-100" >
+            <select class="custom-select w-100" name="Time" style="height: 28px" id="ApptTime">
+              <option selected v-for="(time, i) in schedule" :key="i"> {{time}}</option>
+            </select>
+          </div>
+                    
+          <label class="mt-3">Specialisation</label>
+          <div class="input-group mb-3 w-100" >
+            <select class="custom-select w-100" name="Specialisation" style="height: 28px" id="DoctorName" v-model=specialisation>
+              <option selected v-for="(doc, i) in doctToSpecialisation" :key="i"> {{i}}</option>
+            </select>
+          </div>
+
+          <label class="mt-3">Doctors</label>
+          <div class="input-group mb-3 w-100" >
+            <select class="custom-select w-100" name="DoctorName" style="height: 28px" id="DoctorName" v-model="chosen">
+              <option selected v-for="(doc, i) in doctToSpecialisation[specialisation]" :key="i"> {{doc}} 
+              </option>
+              
+            </select>
+          </div>
+
+
+        </div>
+      </div>
+
+      <button type="submit" class="btn btn-primary next1" id="submit">Submit</button>
+
     </form>
   </section>
-  <div class="position-relative prog1" >
-    <div class="progress" style="height: 1px;">
-      <div class="progress-bar" role="progressbar" style="width: 0%;" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
-    </div>
-    <button type="button" class="position-absolute top-0 start-0 translate-middle btn btn-sm btn-primary rounded-pill" style="width: 2rem; height:2rem;">1</button>
-    <button type="button" class="position-absolute top-0 start-50 translate-middle btn btn-sm btn-secondary rounded-pill" style="width: 2rem; height:2rem;">2</button>
-    <button type="button" class="position-absolute top-0 start-100 translate-middle btn btn-sm btn-secondary rounded-pill" style="width: 2rem; height:2rem;">3</button>
-  </div>
-  <button type="button" class="btn btn-primary next1"> <router-link style="text-decoration: none; color: White" to="/formtwo" >Next</router-link></button>
+
 
 </div>
 
 </template>
+
+<script>
+
+export default {
+  data(){
+    return {    
+      schedule: ['10:00 AM', '10:30 AM', '11:00 AM', '11:30 AM', '12:00 PM', '12:30 PM','13:00 PM','13:30 PM','14:00 PM', '14:30 PM' , '15:00 PM', '15:30 PM', '16:00 PM', '16:30 PM', '17:00 PM'],
+      allergies: '',
+      symptoms: '',
+      date: '',
+      doctorList: [],
+      doctToSpecialisation: 
+                    {
+                      "Physiology":[],
+                      "Psychology":[],
+                      "General Practitioner": []
+                    },
+      specialisation: "",
+      chosenID:""
+      }
+  },
+  mounted() {
+    document.querySelector("form").addEventListener('submit', this.handleSubmit);
+    this.getDoctorList()
+  },
+  methods: {
+    handleSubmit: function(event){
+      event.preventDefault()
+      const data = new FormData(event.target)
+      const value = Object.fromEntries(data.entries());
+      console.log(JSON.stringify(value))
+      console.log(value);
+      
+      this.$router.push("/");
+    },
+
+    getDoctorList() {
+      const response = fetch("http://localhost:5001/doctor")
+        .then((response) => response.json())
+        .then((data) => {
+          this.doctorList = data.data.doctors;
+          for (let doc = 0; doc<this.doctorList.length; doc++) {
+
+            if (this.doctorList[doc].Specialisation in this.doctToSpecialisation) {
+              this.doctToSpecialisation[this.doctorList[doc].Specialisation]
+              .push([this.doctorList[doc].DoctorName, this.doctorList[doc].DoctorID])
+              console.log(this.doctToSpecialisation)
+            }
+          }
+        })
+        .catch((error) => {
+          // Errors when calling the service; such as network error,
+          // service offline, etc
+          console.log("unable to get doctor" + error);
+        });
+    },
+  }
+}
+
+
+</script>
+
 
 <style scoped>
 .bg {
@@ -75,8 +167,8 @@
   margin-right: auto;
   background-color: #F5F5F5	;
   width: 90%;
-  height: 70vh;
-  overflow: hidden;
+  min-height: 100vh;
+
 }
 
 .formheader{

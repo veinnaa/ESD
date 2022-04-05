@@ -27,7 +27,7 @@
 
 		<button id="submit">
 			<div class="spinner hidden" id="spinner"></div>
-			<span id="button-text">Pay now</span>
+			<span id="button-text" >Pay now</span>
 		</button>
 
 		<div id="payment-message" class="hidden"></div>
@@ -49,13 +49,22 @@ export default {
       message: "no booking records",
       doctorID: "",
       // doctorName:"",
+      items:{id: "Physiology"},
+      clientSecret:"",
+      element:"",
       details: {},
+      stripe:"",
       rate: "",
       bookingID: this.$route.params.bookingID,
       // specialization: ""
     }
   },
   mounted() {
+    this.initialize();
+    this.checkStatus();
+
+    document.querySelector("#payment-form").addEventListener("submit", this.handleSubmit);
+
     this.getbooking();
   },
   methods: {
@@ -83,6 +92,103 @@ export default {
             console.log(this.message + error);
 
           })
+    },
+    async initialize() {
+      const stripe = Stripe("pk_test_51Kh46VBUerOeATXPukBZ2Jmy5Z5iL54RVwxwA29N9UdSTXaRgMAzrxicIgVvwv82Sx6MylRjXk2ehUI3SpqzN2Bu00yWJTwLvZ");
+      let elements;
+      var items = this.items;
+      const response = await fetch("http://localhost:4242/create-payment-intent", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ items }),
+      });
+      const { clientSecret, amount } = await response.json();
+      this.clientSecret = clientSecret;
+      
+      const appearance = {
+        theme: 'stripe',
+      };
+      elements = stripe.elements({ appearance, clientSecret, amount });
+      this.element = elements;
+      this.stripe = stripe;
+      const paymentElement = elements.create("payment");
+      paymentElement.mount("#payment-element");
+    },
+    handleSubmit: function(event){
+      
+      event.preventDefault();
+      this.setLoading(true);
+
+      var elements = this.element;
+      var stripe = this.stripe;
+      const { error } = stripe.confirmPayment({
+        elements,
+        confirmParams: {
+          // Make sure to change this to your payment completion page
+          return_url: "http://localhost:3000/index.html",
+        },
+      });
+      fetch("http://localhost:5002/booking/payment/"+this.bookingID, {
+        method: "PUT"
+      })
+        .then(response=>response.json());
+
+      // if (error.type === "card_error" || error.type === "validation_error") {
+      //   this.showMessage(error.message);
+      // } else {
+      //   this.showMessage("An unexpected error occured.");
+      // }
+      this.setLoading(false);
+    },
+    async setLoading(isLoading) {
+      if (isLoading) {
+        // Disable the button and show a spinner
+        // document.querySelector("#submit").disabled = true;
+        document.querySelector("#spinner").classList.remove("hidden");
+        document.querySelector("#button-text").classList.add("hidden");
+      } else {
+        // document.querySelector("#submit").disabled = false;
+        document.querySelector("#spinner").classList.add("hidden");
+        document.querySelector("#button-text").classList.remove("hidden");
+      }
+    },
+
+    async checkStatus() {
+      const clientSecret = new URLSearchParams(window.location.search).get(
+        "payment_intent_client_secret"
+      );
+
+      if (!clientSecret) {
+        return;
+      }
+
+      const { paymentIntent } = await stripe.retrievePaymentIntent(clientSecret);
+
+      switch (paymentIntent.status) {
+        case "succeeded":
+          this.showMessage("Payment succeeded!");
+          break;
+        case "processing":
+          this.showMessage("Your payment is processing.");
+          break;
+        case "requires_payment_method":
+          this.showMessage("Your payment was not successful, please try again.");
+          break;
+        default:
+          this.showMessage("Something went wrong.");
+          break;
+      }
+    },
+    showMessage(messageText) {
+      const messageContainer = document.querySelector("#payment-message");
+
+      messageContainer.classList.remove("hidden");
+      messageContainer.textContent = messageText;
+
+      setTimeout(function () {
+        messageContainer.classList.add("hidden");
+        messageText.textContent = "";
+      }, 4000);
     }
   },
   // computed: {

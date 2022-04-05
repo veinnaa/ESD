@@ -7,8 +7,6 @@ import AppointmentDetails from '../views/AppointmentDetails.vue'
 import PatientDetails from '../views/PatientDetails.vue'
 import newlogin from '../views/newlogin.vue'
 import Form from '../views/form.vue'
-import FormTwo from '../views/formtwo.vue'
-import FormThree from '../views/formthree.vue'
 
 // import Form from '../views/PersonalDetailsForm.vue'
 import Checkout from '../views/Checkout.vue'
@@ -61,16 +59,7 @@ const routes = [
     name: 'form',
     component: Form
   },
-  {
-    path: '/formtwo',
-    name: 'formtwo',
-    component: FormTwo
-  },
-  {
-    path: '/formthree',
-    name: 'formthree',
-    component: FormThree
-  },
+
 ]
 
 const router = createRouter({

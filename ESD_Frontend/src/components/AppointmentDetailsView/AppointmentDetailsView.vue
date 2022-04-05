@@ -3,17 +3,17 @@
     <h2>Appointment Details</h2>
 
     <table class="table table-borderless">
-      <tbody v-for="(v, k) in detail" :key="k">
+      <tbody >
         <tr>
-          <th scope="row" v-if="k == 'DoctorID'">DoctorName</th>
-          <th scope="row" v-else>{{ k }}</th>
-          <td v-if="k == 'AcceptanceStatus' && v == null">
-            Pending Confirmation
-          </td>
-          <td v-else-if="k == 'AcceptanceStatus' && v != null">Confirmed</td>
+          <th>Patient Name</th>
+          <td>{{patientName}}</td>
+        </tr>
+        <tr v-for="(v, k) in detail" :key="k">
+          <th scope="row">{{ k }}</th>
+          <td v-if="k == 'AcceptanceStatus' && v == false">Pending Confirmation</td>
+          <td v-else-if="k == 'AcceptanceStatus' && v == true">Confirmed</td>
           <td v-else-if="k == 'DateTime'">{{ datetime }}</td>
-          <td v-else-if="k == 'DoctorID'">{{ doctorName }}</td>
-          <td v-else-if="k == 'PatientID'">{{ patientName }}</td>
+          <td v-else-if="k == 'PatientICNo'">{{ patientName }}</td>
           <td v-else>{{ v }}</td>
         </tr>
       </tbody>
@@ -56,6 +56,7 @@ export default {
         .then((data) => {
           // console.log(data);
           this.detail = data.data;
+          console.log(this.detail);
           let d = new Date(this.detail.DateTime);
           var date = d.getDate();
           var month = d.toLocaleString("en-us", { month: "short" });
@@ -67,7 +68,7 @@ export default {
             day + ", " + date + " " + month + " " + year + " " + time;
 
           this.getDoctorName(this.detail.DoctorID);
-          this.getPatientName(this.detail.PatientID);
+          this.getPatientName(this.detail.ICNo);
         })
         .catch((error) => {
           // Errors when calling the service; such as network error,
@@ -87,15 +88,13 @@ export default {
           console.log("unable to get doctor " + error);
         });
     },
-    async getPatientName(patientID) {
+    async getPatientName(patientICNo) {
       const response = await fetch(
-        "http://192.168.0.199:5000/patient/" + patientID
+        "http://localhost:5000/patient/" + patientICNo
       )
         .then((response) => response.json())
         .then((data) => {
-          // console.log(response);
           this.patientName = data.data["PatientName"];
-          console.log(this.patientName);
         })
         .catch((error) => {
           console.log("unable to get patient " + error);
