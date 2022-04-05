@@ -52,7 +52,7 @@ export default {
     },
     async getAppointmentDetail() {
       const response = await fetch(
-        "http://localhost:5002/booking/" + this.bookingID
+        "http://192.168.0.199:5002/booking/" + this.bookingID
       )
         .then((response) => response.json())
         .then((data) => {
@@ -74,11 +74,11 @@ export default {
         .catch((error) => {
           // Errors when calling the service; such as network error,
           // service offline, etc
-          console.log("unable to get bookings" + error);
+          console.log("unable to get bookings " + error);
         });
     },
     async getDoctorName(doctorID) {
-      const response = await fetch("http://localhost:5001/doctor/" + doctorID)
+      const response = await fetch("http://192.168.0.199:5001/doctor/" + doctorID)
         .then((response) => response.json())
         .then((data) => {
           // console.log(response);
@@ -86,7 +86,7 @@ export default {
           // console.log(this.doctorName);
         })
         .catch((error) => {
-          console.log("unable to get doctor" + error);
+          console.log("unable to get doctor " + error);
         });
     },
     async getPatientName(patientID) {
@@ -100,7 +100,7 @@ export default {
           console.log(this.patientName);
         })
         .catch((error) => {
-          console.log("unable to get patient" + error);
+          console.log("unable to get patient " + error);
         });
     },
   },
