@@ -27,11 +27,11 @@
           <td>{{ dateList[i][1] }}</td>
           <td class="text-start"><a :href="appointment.ZoomID">{{ appointment.ZoomID }}</a></td>
           <td>{{ doctorNameList[i] }}</td>
-          <td v-if="appointment.AcceptanceStatus == null">
+          <td v-if="appointment.AcceptanceStatus == false">
             Pending confirmation
           </td>
           <td v-else>Confirmed</td>
-          <td><i class="bi bi-trash-fill text-danger"></i></td>
+          <td><button class="bi bi-trash-fill text-danger" @click="cancelAppointment(appointment['BookingID'])"></button></td>
           <td v-if="appointment.PaymentStatus == false">
             <i class="bi bi-credit-card-fill text-primary" @click="goToAppointment(appointment['BookingID'])"></i>
           </td>
@@ -45,6 +45,8 @@
 <script>
 import AppointmentCard from "@/components/AppointmentCard";
 
+var bookingURL = "http://localhost:5002/booking"
+var doctorURL = "http://localhost:5001/doctor"
 export default {
   name: "AppointmentsView",
   components: {
@@ -75,11 +77,19 @@ export default {
     goToAppointment(x) {
       this.$router.push("/appointment/" + x);
     },
+    cancelAppointment(x){
+      const response = fetch(bookingURL + "/" + x,{
+          method: "DELETE"
+        }
+      ).then(response=>response.json())
+      window.location.reload()
+
+    },
     openForm() {
       this.$router.push("/form");
     },
     async getAppointmentDetails() {
-      const response = await fetch("http://localhost:5002/booking")
+      const response = await fetch(bookingURL)
         .then((response) => response.json())
         .then((data) => {
           // console.log(data);
@@ -99,7 +109,7 @@ export default {
       }
     },
     async getDoctorName(doctorID) {
-      const response = await fetch("http://localhost:5001/doctor/" + doctorID)
+      const response = await fetch(doctorURL + "/" + doctorID)
         .then((response) => response.json())
         .then((data) => {
           // console.log(response);

@@ -67,12 +67,23 @@
             </select>
           </div>
                     
-          <label class="mt-3" for="datepicker-dateformat2">Doctors</label>
+          <label class="mt-3">Specialisation</label>
           <div class="input-group mb-3 w-100" >
-            <select class="custom-select w-100" name="DoctorName" style="height: 28px" id="DoctorName">
-              <option selected v-for="(doc, i) in doctorList" :key="i"> {{doc.DoctorName}}</option>
+            <select class="custom-select w-100" name="Specialisation" style="height: 28px" id="DoctorName" v-model=specialisation>
+              <option selected v-for="(doc, i) in doctToSpecialisation" :key="i"> {{i}}</option>
             </select>
           </div>
+
+          <label class="mt-3">Doctors</label>
+          <div class="input-group mb-3 w-100" >
+            <select class="custom-select w-100" name="DoctorName" style="height: 28px" id="DoctorName" v-model="chosen">
+              <option selected v-for="(doc, i) in doctToSpecialisation[specialisation]" :key="i"> {{doc}} 
+              </option>
+              
+            </select>
+          </div>
+
+
         </div>
       </div>
 
@@ -91,13 +102,20 @@
 export default {
   data(){
     return {    
-      schedule: ['10:00 AM', '10:30 AM', '11:00 AM', '11:30 AM', '12:00 PM', '12:30 PM','13:00 PM','13:30 PM','14:00 PM', '14:30 PM' ],
+      schedule: ['10:00 AM', '10:30 AM', '11:00 AM', '11:30 AM', '12:00 PM', '12:30 PM','13:00 PM','13:30 PM','14:00 PM', '14:30 PM' , '15:00 PM', '15:30 PM', '16:00 PM', '16:30 PM', '17:00 PM'],
       allergies: '',
       symptoms: '',
       date: '',
       doctors: ['Veinna Tio', 'Richie Chan', 'Adrian Poh', 'Zi Qing', 'Lim Shu Ying'],
-      doctorList: []
-      
+      doctorList: [],
+      doctToSpecialisation: 
+                    {
+                      "Physiology":[],
+                      "Psychology":[],
+                      "General Practitioner": []
+                    },
+      specialisation: "",
+      chosenID:""
       }
   },
   mounted() {
@@ -111,15 +129,23 @@ export default {
       const value = Object.fromEntries(data.entries());
       console.log(JSON.stringify(value))
       console.log(value);
+      
+      this.$router.push("/");
     },
 
     getDoctorList() {
       const response = fetch("http://localhost:5001/doctor")
         .then((response) => response.json())
         .then((data) => {
-          console.log(response);
-          console.log(data);
-          this.doctorList = data.data.books;
+          this.doctorList = data.data.doctors;
+          for (let doc = 0; doc<this.doctorList.length; doc++) {
+
+            if (this.doctorList[doc].Specialisation in this.doctToSpecialisation) {
+              this.doctToSpecialisation[this.doctorList[doc].Specialisation]
+              .push([this.doctorList[doc].DoctorName, this.doctorList[doc].DoctorID])
+              console.log(this.doctToSpecialisation)
+            }
+          }
         })
         .catch((error) => {
           // Errors when calling the service; such as network error,
