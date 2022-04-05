@@ -119,10 +119,13 @@
 </template>
 
 <script>
+var patientURL = "http://localhost:5000/patient/getAll"
+
 export default {
   name: "LoginContainer",
   data() {
     return {
+      patientList: [],
       email: "",
       password: "",
     };
@@ -137,7 +140,8 @@ export default {
           showConfirmButton: false,
           timer: 1000,
         });
-      } else {
+      }
+      else if (this.patientList.includes(this.email)) {
           this.$swal({
             icon: "success",
             position: 'center',
@@ -146,11 +150,33 @@ export default {
             showConfirmButton: false,
             timer: 1400,
           });
-
-          this.$router.push("/profile");
+          sessionStorage.setItem("PatientID", this.email);
+          this.$router.push("/");
+      } else {
+            this.$swal({
+            icon: "error",
+            position: 'center',
+            title: "User not found",
+            text: "Please register before Logging In!",
+            showConfirmButton: false,
+            timer: 1400,
+          });
       }
     },
   },
+    mounted(){
+        fetch(patientURL)
+          .then(response => response.json())
+          .then(data => 
+            {
+              var patients = data.data.patients;
+              for (let x in patients){
+                this.patientList.push(x);
+              }
+            }
+          )
+    }
+    
 };
 </script>
 

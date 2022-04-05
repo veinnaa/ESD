@@ -15,7 +15,8 @@
         <div class="sb2">
           <div class="time">{{ time }}</div>
           <div class="d">Zoom Link: <a :href="zoomLink">{{ zoomLink }}</a></div>
-          <div class="doc">{{ doctorName }}</div>
+          <div class="patient"> Patient: {{ patientName }} </div>
+          <div class="doc">Doctor: {{ doctorName }}</div>
           <div class="category">{{ doctorSpec }}</div>
         </div>
       </div>
@@ -38,6 +39,7 @@ export default {
       doctorName: "",
       doctorSpec: "",
       doctorID: "",
+      patientName: "",
     };
   },
   mounted() {
@@ -66,8 +68,8 @@ export default {
           this.time = d.toLocaleTimeString()
 
           this.zoomLink = this.detail.ZoomID
-          console.log(this.zoomLink);
           this.getDoctorInfo(this.detail.DoctorID)
+          this.getPatientInfo(this.detail.PatientID)
         })
         .catch((error) => {
           // Errors when calling the service; such as network error,
@@ -86,6 +88,18 @@ export default {
         })
         .catch((error) => {
           console.log("unable to get doctor " + error);
+        });
+    },
+    async getPatientInfo(patientID) {
+      const response = await fetch("http://localhost:5000/patient/" + patientID)
+        .then((response) => response.json())
+        .then((data) => {
+          // console.log(response);
+          this.patientName = data.data["PatientName"];
+          // console.log(this.doctorName);
+        })
+        .catch((error) => {
+          console.log("unable to get patient" + error);
         });
     },
   },

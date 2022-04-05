@@ -91,7 +91,7 @@ export default {
     },
     async getPatientName(patientID) {
       const response = await fetch(
-        "http://192.168.0.199:5000/patient/" + patientID
+        "http://localhost:5000/patient/" + patientID
       )
         .then((response) => response.json())
         .then((data) => {
