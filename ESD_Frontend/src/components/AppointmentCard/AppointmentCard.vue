@@ -14,9 +14,9 @@
       <div class="row">
         <div class="sb2">
           <div class="time">{{ time }}</div>
-          <div class="d">Zoom Link: <a :href="zoomLink">{{ zoomLink }}</a></div>
-          <div class="patient"> Patient: {{ patientName }} </div>
-          <div class="doc">Doctor: {{ doctorName }}</div>
+          <div class="d"><a :href="zoomLink">{{ zoomLink }}</a></div>
+          <!-- <div class="patient"> Patient: {{ patientName }} </div> -->
+          <div class="doc">{{ doctorName }}</div>
           <div class="category">{{ doctorSpec }}</div>
         </div>
       </div>
@@ -91,7 +91,7 @@ export default {
         });
     },
     async getPatientInfo(patientID) {
-      const response = await fetch("http://localhost:5000/patient/" + patientID)
+      const response = await fetch("http://192.168.0.199:5000/patient/" + patientID)
         .then((response) => response.json())
         .then((data) => {
           // console.log(response);
