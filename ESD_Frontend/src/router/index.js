@@ -12,7 +12,6 @@ import FormThree from '../views/formthree.vue'
 
 // import Form from '../views/PersonalDetailsForm.vue'
 import Checkout from '../views/Checkout.vue'
-import Cancellation from '../views/Cancellation.vue'
 
 const routes = [
   {
@@ -51,11 +50,6 @@ const routes = [
     path: '/checkout/:bookingID',
     name: 'Checkout',
     component: Checkout
-  },
-  {
-    path: '/cancellation/:bookingID',
-    name: 'Cancellation',
-    component: Cancellation
   },
   {
     path: '/newlogin',
