@@ -14,7 +14,7 @@
           <div class="time">{{ time }}</div>
           <div class="d">Zoom Link: <a :href="zoomLink">{{ zoomLink }}</a></div>
           <div class="patient"> Patient: {{ patientName }} </div>
-          <div >Doctor: {{ doctorName }}</div>
+          <div class="doc">Doctor: {{ doctorName }}</div>
           <div class="category">{{ doctorSpec }}</div>
         </div>
       </div>
