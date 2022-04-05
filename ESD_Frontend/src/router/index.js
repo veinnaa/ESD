@@ -5,7 +5,6 @@ import Login from '../views/Login.vue'
 import Appointment from '../views/Appointment.vue'
 import AppointmentDetails from '../views/AppointmentDetails.vue'
 import PatientDetails from '../views/PatientDetails.vue'
-import newlogin from '../views/newlogin.vue'
 import DoctorAppointmentsView from '../views/DoctorAppointmentsView.vue'
 import Form from '../views/form.vue'
 
@@ -49,11 +48,6 @@ const routes = [
     path: '/checkout/:bookingID',
     name: 'Checkout',
     component: Checkout
-  },
-  {
-    path: '/newlogin',
-    name: 'newlogin',
-    component: newlogin
   },
   {
     path: '/form',

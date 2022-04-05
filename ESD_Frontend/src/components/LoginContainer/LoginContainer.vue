@@ -120,18 +120,21 @@
 
 <script>
 var patientURL = "http://localhost:5000/patient/getAll"
+var doctorURL = "http://localhost:5001/doctor"
 
 export default {
   name: "LoginContainer",
   data() {
     return {
       patientList: [],
+      doctorList:[],
       email: "",
       password: "",
     };
   },
   methods: {
     login() {
+      console.log(this.doctorList);
       if (this.email == "" || this.password == "") {
         this.$swal({
           icon: "error",
@@ -145,13 +148,25 @@ export default {
           this.$swal({
             icon: "success",
             position: 'center',
-            title: "Login success!",
+            title: "Login success for User!",
             text: "Welcome back to __",
             showConfirmButton: false,
             timer: 1400,
           });
-          sessionStorage.setItem("PatientID", this.email);
+          sessionStorage.setItem("PatientICNo", this.email);
           this.$router.push("/");
+      } else if (this.doctorList.includes(this.email)) {
+        console.log(1123);
+          this.$swal({
+            icon: "success",
+            position: 'center',
+            title: "Login success for Doctor!",
+            text: "Welcome back to __",
+            showConfirmButton: false,
+            timer: 1400,
+          });
+          sessionStorage.setItem("DoctorID", this.email);
+          this.$router.push("/doctorAppts");
       } else {
             this.$swal({
             icon: "error",
@@ -171,7 +186,17 @@ export default {
             {
               var patients = data.data.patients;
               for (let x in patients){
-                this.patientList.push(x);
+                this.patientList.push(patients[x].ICNo);
+              }
+            }
+          ),
+        fetch(doctorURL)
+          .then(response => response.json())
+          .then(data => 
+            {
+              var doctor = data.data.doctors;
+              for (let x in doctor){
+                this.doctorList.push(doctor[x].DoctorID.toString());
               }
             }
           )
