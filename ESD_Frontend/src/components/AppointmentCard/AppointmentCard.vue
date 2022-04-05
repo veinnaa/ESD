@@ -71,17 +71,17 @@ export default {
           console.log("unable to get bookings " + error);
         });
     },
-    getPatientName(patientID) {
-      console.log(patientID);
-      const response = fetch("http://localhost:5000/patient/" + patientID)
+    async getDoctorInfo(doctorID) {
+      const response = await fetch("http://localhost:5001/doctor" + "/" + doctorID)
         .then((response) => response.json())
         .then((data) => {
-          console.log(response);
-          this.patientName = data.data["PatientName"];
-          console.log(this.patientName);
+          // console.log(response);
+          this.doctorName = data.data["DoctorName"];
+          this.doctorSpec = data.data["Specialisation"]
+          // console.log(this.doctorName);
         })
         .catch((error) => {
-          console.log("unable to get patient " + error);
+          console.log("unable to get doctor " + error);
         });
     },
     async getPatientInfo(ICNo) {

@@ -1,7 +1,7 @@
 <template>
   <div class="appointment" >
     <!-- <h1>Appointments</h1> -->
-    <AppointmentsView />
+    <DoctorAppointmentsView />
     
   </div>
   
@@ -9,12 +9,12 @@
 
 <script>
 // @ is an alias to /src
-import AppointmentsView from '@/components/AppointmentsView'
+import DoctorAppointmentsView from '@/components/DoctorAppointmentsView'
 
 export default {
-  name: 'appointment',
+  name: 'DoctorAppointments',
   components: {
-    AppointmentsView
+    DoctorAppointmentsView
   }
 }
 </script>
@@ -30,8 +30,3 @@ export default {
     color: $main
     text-align: center
 </style>
-
-
-    path: '/appointment',
-    name: 'Appointment',
-    component: Appointment

@@ -6,6 +6,7 @@ import Appointment from '../views/Appointment.vue'
 import AppointmentDetails from '../views/AppointmentDetails.vue'
 import PatientDetails from '../views/PatientDetails.vue'
 import newlogin from '../views/newlogin.vue'
+import DoctorAppointmentsView from '../views/DoctorAppointmentsView.vue'
 import Form from '../views/form.vue'
 
 // import Form from '../views/PersonalDetailsForm.vue'
@@ -58,6 +59,11 @@ const routes = [
     path: '/form',
     name: 'form',
     component: Form
+  },
+  {
+    path: '/doctorAppts',
+    name: 'DoctorAppointmentsView',
+    component: DoctorAppointmentsView
   },
 
 ]

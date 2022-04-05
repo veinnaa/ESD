@@ -12,7 +12,6 @@ import Form from "../components/form.vue"
 export default {
   name: 'form',
   components: {
-    // AppointmentsView
     Form
   }
 }
