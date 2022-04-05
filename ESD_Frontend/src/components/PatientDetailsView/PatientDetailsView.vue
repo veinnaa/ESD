@@ -74,20 +74,21 @@ export default {
     // },
     getPatientInfo() {
       const response = fetch(
-        "http://192.168.0.199:5000/patient/" + this.patientID
+        "http://localhost:5000/patient/" + this.patientID
       )
         .then((response) => response.json())
         .then((data) => {
           console.log(data);
           this.detail = data.data;
 
-          let patientID = data.data["PatientID"]
+          let patientID = data.data["ICNo"]
           let patientName = data.data["PatientName"]
           let patientIC = data.data["ICNo"]
           let patientPhone = data.data["PatientPhoneNo"]
           let patientAddr = data.data["PatientAddress"]
+          let patientAllergies = data.data["PatientAllergies"]
 
-          this.detail = {"Patient ID": patientID, "Patient Name": patientName, "NRIC No.": patientIC, "Phone No.": patientPhone, "Address": patientAddr}
+          this.detail = {"ICNo": patientID, "Patient Name": patientName, "NRIC No.": patientIC, "Phone No.": patientPhone, "Address": patientAddr, "Patient Allergies": patientAllergies}
 
           console.log(this.detail);
         })

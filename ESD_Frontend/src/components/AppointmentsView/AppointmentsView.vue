@@ -35,11 +35,11 @@
             <img
               src="./clipboard2-data-fill.svg"
               alt="View patient details"
-              @click="goToPatient(appointment['PatientID'])"
+              @click="goToPatient(appointment['ICNo'])"
             />
           </td>
 
-          <td v-if="appointment.AcceptanceStatus == null">
+          <td v-if="appointment.AcceptanceStatus == false">
             Pending confirmation
           </td>
           <td v-else>Confirmed</td>
@@ -80,7 +80,7 @@ export default {
       details: {},
       dateList: [],
       patientName: "",
-      patientID: "",
+      patientICNo: "",
       patientNameList: [],
       headerList: [
         "Date",
@@ -124,7 +124,7 @@ export default {
     },
     async acceptAppointment(bookingID) {
       const response = await fetch(
-        "http://192.168.0.199:5002/booking/accepted/" + bookingID,
+        "http://localhost:5002/booking/accepted/" + bookingID,
         {
           method: "PUT",
         }
@@ -145,7 +145,7 @@ export default {
     },
     async declineAppointment(bookingID) {
       const response = await fetch(
-        "http://192.168.0.199:5002/booking/declined/" + bookingID,
+        "http://localhost:5002/booking/declined/" + bookingID,
         {
           method: "PUT",
         }
@@ -183,7 +183,7 @@ export default {
     },
     async cancelAppointment(bookingID) {
       const response = await fetch(
-        "http://192.168.0.199:5002/booking/" + bookingID,
+        "http://localhost:5002/booking/" + bookingID,
         {
           method: "DELETE",
         }
@@ -206,10 +206,10 @@ export default {
       this.$router.push("/form");
     },
     async getAppointmentDetails() {
-      const response = await fetch("http://192.168.0.199:5002/booking")
+      const response = await fetch("http://localhost:5002/booking")
         .then((response) => response.json())
         .then((data) => {
-          // console.log(data);
+          console.log(data);
           this.details = data.data["booking"];
           console.log(this.details);
         })
@@ -220,7 +220,7 @@ export default {
         });
 
       for (let i = 0; i < this.details.length; i++) {
-        await this.getPatientName(this.details[i].PatientID);
+        await this.getPatientName(this.details[i].ICNo);
 
         let date = new Date(this.details[i].DateTime);
         this.dateList.push([
@@ -230,9 +230,9 @@ export default {
         // console.log(this.dateList);
       }
     },
-    getPatientName(patientID) {
-      console.log(patientID);
-      const response = fetch("http://192.168.0.199:5000/patient/" + patientID)
+    getPatientName(patientICNo) {
+      console.log(patientICNo);
+      const response = fetch("http://localhost:5000/patient/" + patientICNo)
         .then((response) => response.json())
         .then((data) => {
           // console.log(data);

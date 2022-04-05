@@ -46,7 +46,7 @@ export default {
   },
   methods: {
     async getAppointmentDetail() {
-      const response = await fetch("http://192.168.0.199:5002/booking")
+      const response = await fetch("http://localhost:5002/booking")
         .then((response) => response.json())
         .then((data) => {
           // console.log(data);
@@ -69,7 +69,7 @@ export default {
 
           this.zoomLink = this.detail.ZoomID;
           console.log(this.zoomLink);
-          this.getPatientName(this.detail.PatientID);
+          this.getPatientName(this.detail.ICNo);
         })
         .catch((error) => {
           // Errors when calling the service; such as network error,
@@ -79,7 +79,7 @@ export default {
     },
     getPatientName(patientID) {
       console.log(patientID);
-      const response = fetch("http://192.168.0.199:5000/patient/" + patientID)
+      const response = fetch("http://localhost:5000/patient/" + patientID)
         .then((response) => response.json())
         .then((data) => {
           console.log(response);
