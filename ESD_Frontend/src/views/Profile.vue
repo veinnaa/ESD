@@ -5,7 +5,7 @@
 </template>
 
 <script>
-
+console.log(sessionStorage.getItem("PatientID"));
 export default {
   name: "Profile",
   data() {

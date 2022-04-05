@@ -94,7 +94,7 @@ export default {
 
       for (let i = 0; i < this.details.length; i++) {
         await this.getDoctorName(this.details[i].DoctorID);
-
+        console.log(this.details[i].DateTime)
         let date = new Date(this.details[i].DateTime)
         this.dateList.push([date.toLocaleDateString(), date.toLocaleTimeString()])
         this.doctorNameList.push(this.doctorName);
