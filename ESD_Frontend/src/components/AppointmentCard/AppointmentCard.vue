@@ -15,8 +15,8 @@
         <div class="sb2">
           <div class="time">{{ time }}</div>
           <div class="d"><a :href="zoomLink">{{ zoomLink }}</a></div>
-          <!-- <div class="patient"> Patient: {{ patientName }} </div> -->
-          <div class="doc">{{ doctorName }}</div>
+          <div class="patient"> Patient: {{ patientName }} </div>
+          <div class="doc"> Dcotor: {{ doctorName }}</div>
           <div class="category">{{ doctorSpec }}</div>
         </div>
       </div>
