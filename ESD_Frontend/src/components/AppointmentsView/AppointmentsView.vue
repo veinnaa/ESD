@@ -1,10 +1,11 @@
 <template>
   <div class="appointments-view">
-    <div class="upcoming-header">
-      <h2>Upcoming Appointment</h2>
-      <AppointmentCard class="appointment-card" />
+    <h2>Upcoming Appointment</h2>
+    <AppointmentCard class="appointment-card" />
+    <div class="header">
+      <h2>All Appointments</h2>
+      <h2><i class="bi bi-plus-lg" @click="openForm()"></i></h2>
     </div>
-    <h2>All Appointments</h2>
     <table class="table table-bordered">
       <thead>
         <tr class="table-success">
@@ -27,39 +28,17 @@
           <td class="text-start">
             <a :href="appointment.ZoomID">{{ appointment.ZoomID }}</a>
           </td>
-
-          <td>
-            {{ patientNameList[i] }}
-          </td>
-          <td>
-            <img
-              src="./clipboard2-data-fill.svg"
-              alt="View patient details"
-              @click="goToPatient(appointment['ICNo'])"
-            />
-          </td>
-
+          <td>{{ doctorNameList[i] }}</td>
           <td v-if="appointment.AcceptanceStatus == false">
             Pending confirmation
           </td>
           <td v-else>Confirmed</td>
-          <td v-if="appointment.AcceptanceStatus == false">
-            <i
-              class="bi bi-question-circle text-primary"
-              @click="confirmAppointment(appointment['BookingID'])"
-            ></i>
+          <td><i class="bi bi-trash-fill text-danger" @click="confirming(appointment['BookingID'])"></i></td>
+          <td v-if="appointment.PaymentStatus == false">
+            <i class="bi bi-credit-card-fill text-primary" @click="goToAppointment(appointment['BookingID'])"></i>
           </td>
-          <td v-else-if="appointment.AcceptanceStatus == true">
+          <td v-else-if="appointment.PaymentStatus == true">
             <i class="bi bi-check-circle-fill text-success"></i>
-          </td>
-          <td v-else><i class="bi bi-check-circle-fill text-success"></i></td>
-          <td v-if="appointment.PaymentStatus == false">Pending</td>
-          <td v-else>Paid</td>
-          <td>
-            <i
-              class="bi bi-trash-fill text-danger"
-              @click="confirmCancellation(appointment['BookingID'])"
-            ></i>
           </td>
         </tr>
       </tbody>
@@ -70,7 +49,6 @@
 <script>
 import AppointmentCard from "@/components/AppointmentCard";
 
-var bookingURL = "http://localhost:5002/booking"
 var doctorURL = "http://localhost:5001/doctor"
 export default {
   name: "AppointmentsView",
@@ -81,19 +59,17 @@ export default {
     return {
       details: {},
       dateList: [],
-      patientName: "",
-      patientICNo: "",
-      patientNameList: [],
+      doctorName: "",
+      doctorID: "",
+      doctorNameList: [],
       headerList: [
         "Date",
         "Time",
         "Appointment Link",
-        "Patient",
-        "Patient Details",
+        "Doctor",
         "Status",
-        "Accept?",
-        "Payment Status",
         "Cancel?",
+        "Checkout",
       ],
     };
   },
@@ -104,70 +80,8 @@ export default {
     goToAppointment(x) {
       this.$router.push("/appointment/" + x);
     },
-    goToPatient(x) {
-      this.$router.push("/patient/" + x);
-    },
-    confirmAppointment(bookingID) {
-      this.$swal({
-        title: "Accept Appointment?",
-        icon: "question",
-        showCancelButton: true,
-        confirmButtonColor: "#5cb85c",
-        cancelButtonColor: "#d33",
-        confirmButtonText: "Accept Appointment",
-        cancelButtonText: "Decline Appointment",
-      }).then((result) => {
-        if (result.isConfirmed) {
-          this.acceptAppointment(bookingID);
-        } else if (result.dismiss === this.$swal.DismissReason.cancel) {
-          this.declineAppointment(bookingID);
-        }
-      });
-    },
-    async acceptAppointment(bookingID) {
-      const response = await fetch(
-        "http://localhost:5002/booking/accepted/" + bookingID,
-        {
-          method: "PUT",
-        }
-      )
-        .then((response) => response.json())
-        .then((res) => {
-          console.log(res);
-          this.$swal({
-            icon: "success",
-            title: "Appointment has been accepted!",
-            showConfirmButton: false,
-          });
-          location.reload();
-        })
-        .catch((error) => {
-          console.log("unable to accept booking " + error);
-        });
-    },
-    async declineAppointment(bookingID) {
-      const response = await fetch(
-        "http://localhost:5002/booking/declined/" + bookingID,
-        {
-          method: "PUT",
-        }
-      )
-        .then((response) => response.json())
-        .then((res) => {
-          console.log(res);
-          this.$swal({
-            icon: "success",
-            title: "Appointment has been declined!",
-            text: "Appoinment is cancelled.",
-            showConfirmButton: false,
-          });
-          location.reload();
-        })
-        .catch((error) => {
-          console.log("unable to decline booking " + error);
-        });
-    },
-    confirmCancellation(bookingID) {
+  
+    confirming(bookingID) {
       this.$swal({
         title: "Are you sure?",
         text: "You will have to re-book the appointment once you have cancelled",
@@ -183,7 +97,6 @@ export default {
         }
       });
     },    
-
     cancelAppointment(x){
       const response = fetch(bookingURL + "/" + x,{
           method: "DELETE"
@@ -203,47 +116,40 @@ export default {
           console.log("unable to delete booking " + error);
         });
     },  
-
     openForm() {
       this.$router.push("/form");
     },
-
     async getAppointmentDetails() {
-      const response = await fetch(bookingURL)
+      var bookingURL = "http://localhost:5002/booking/patient/";
+      var id = sessionStorage.getItem("PatientICNo");
+      const response = await fetch(bookingURL + id)
         .then((response) => response.json())
         .then((data) => {
           console.log(data);
-          this.details = data.data["booking"];
+          this.details = data.data;
         })
         .catch((error) => {
           // Errors when calling the service; such as network error,
           // service offline, etc
           console.log("unable to get bookings " + error);
         });
-
       for (let i = 0; i < this.details.length; i++) {
-        await this.getPatientName(this.details[i].ICNo);
-
-        let date = new Date(this.details[i].DateTime);
-        this.dateList.push([
-          date.toLocaleDateString(),
-          date.toLocaleTimeString(),
-        ]);
-        // console.log(this.dateList);
+        await this.getDoctorName(this.details[i].DoctorID);
+        let date = new Date(this.details[i].DateTime)
+        this.dateList.push([date.toLocaleDateString(), date.toLocaleTimeString()])
+        this.doctorNameList.push(this.doctorName);
       }
     },
-    getPatientName(patientICNo) {
-      console.log(patientICNo);
-      const response = fetch("http://localhost:5000/patient/" + patientICNo)
+    async getDoctorName(doctorID) {
+      const response = await fetch(doctorURL + "/" + doctorID)
         .then((response) => response.json())
         .then((data) => {
-          // console.log(data);
-          this.patientName = data.data["PatientName"];
-          this.patientNameList.push(this.patientName);
-          // console.log(this.patientName);
+          // console.log(response);
+          this.doctorName = data.data["DoctorName"];
+          // console.log(this.doctorName);
         })
         .catch((error) => {
-          console.log("unable to get patient " + error);
+          console.log("unable to get doctor " + error);
         });
     },
   },

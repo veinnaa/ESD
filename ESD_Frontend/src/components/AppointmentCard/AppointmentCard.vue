@@ -18,7 +18,9 @@
             Zoom Link: <a :href="zoomLink">{{ zoomLink }}</a>
           </div>
           <div class="p">Patient:</div>
-          <div class="patient">{{ patientName }}</div>
+          <div>{{ patientName }}</div>
+          <div class="p">Doctor:</div>
+          <div>{{ doctorName }}</div>
         </div>
       </div>
     </div>
@@ -43,15 +45,29 @@ export default {
       patientName: "",
     };
   },
-  beforeMount() {
+  mounted() {
     this.getAppointmentDetail();
+
   },
   methods: {
     async getAppointmentDetail() {
-      const response = await fetch("http://localhost:5002/booking")
+      var id;
+      var uRL;
+      if  (sessionStorage.getItem("DoctorID")!= null){
+        this.doctorID = sessionStorage.getItem("DoctorID");
+        uRL = "http://localhost:5002/booking/doctor/";
+        id = this.doctorID;
+
+      } else if (sessionStorage.getItem("PatientICNo") != null ){
+        this.patientID = sessionStorage.getItem("PatientICNo");
+        uRL = "http://localhost:5002/booking/patient/";
+        id = this.patientID;
+      }
+      console.log(uRL + id)
+      const response = await fetch(uRL + id)
         .then((response) => response.json())
         .then((data) => {
-          this.details = data.data.booking[0]
+          this.details = data.data[0]
 
           let d = new Date(this.details.DateTime)
           this.date = d.getDate()
@@ -60,7 +76,6 @@ export default {
           this.day = d.toLocaleString('en-us', { weekday: 'long' })
           this.time = d.toLocaleTimeString()
 
-          console.log(this.details.ICNo)
           this.zoomLink = this.details.ZoomID
           this.getDoctorInfo(this.details.DoctorID)
           this.getPatientInfo(this.details.ICNo)
@@ -75,10 +90,9 @@ export default {
       const response = await fetch("http://localhost:5001/doctor" + "/" + doctorID)
         .then((response) => response.json())
         .then((data) => {
-          // console.log(response);
+          console.log(data.data)
           this.doctorName = data.data["DoctorName"];
           this.doctorSpec = data.data["Specialisation"]
-          // console.log(this.doctorName);
         })
         .catch((error) => {
           console.log("unable to get doctor " + error);
@@ -89,7 +103,6 @@ export default {
         .then(response => response.json())
         .then(data => {
           this.patientName = data.data["PatientName"];
-          // console.log(this.doctorName);
         })
         .catch((error) => {
           console.log("unable to get patient" + error);

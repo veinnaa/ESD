@@ -15,11 +15,11 @@
 			<p class="mb-2">{{ rate }}</p>
 		</div>
 
-		<!-- <div id = "app" class="d-flex justify-content-between">
+		<div id = "app" class="d-flex justify-content-between">
 			<p class="mb-2">Doctor Name</p>
 			<p class="mb-2">{{ doctorName }}</p>
 		</div>
-
+<!-- 
 		<div class="d-flex justify-content-between">
 			<p class="mb-2">Specialization</p>
 			<p class="mb-2">{{ specialization }}</p>
@@ -48,7 +48,7 @@ export default {
     return {
       message: "no booking records",
       doctorID: "",
-      // doctorName:"",
+      doctorName:"",
       items:{id: "Physiology"},
       clientSecret:"",
       element:"",
@@ -79,7 +79,7 @@ export default {
               fetch(doctorURL + "/" + this.doctorID)
                 .then(resp => resp.json())
                 .then(data => {
-                  // this.doctorName = data.data['DoctorName'],
+                  this.doctorName = data.data['DoctorName'],
                   this.rate = data.data['Rates']
                   // this.specialization = data.data['Specialisation']
 

@@ -20,10 +20,11 @@
       <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
         <div class="navbar-nav">
           <router-link to="/" class="link nav-text" title="Home"> Home </router-link>
-          <router-link to="/appointment" class="link nav-text" title="Explore recipe">Appointments</router-link>
+          <router-link v-if="this.doctorStatus" to="/doctorAppts" class="link nav-text" title="Explore recipe">Appointments</router-link>
+          <router-link v-else-if="this.patientStatus" to="/appointment" class="link nav-text" title="Explore recipe">Appointments</router-link>
 
           <router-link
-            v-if="!this.loginStatus"
+            v-if="this.loginStatus"
             to="/login"
             class="link nav-login-text login"
             title="Login/Register"
@@ -34,6 +35,8 @@
               src="../../assets/icons/login-hover.svg"
             />
           </router-link>
+          <router-link class="link nav-login-text login" to="/login" v-else-if="this.doctorStatus == true" @click="removeSession()" >Click here to Log out, Doctor {{this.doctorID}}</router-link>
+          <router-link class="link nav-login-text login" to="/login" v-else @click="removeSession()" >Click here to Log out, Patient {{this.patientICNo}}</router-link>
         </div>
       </div>
     </div>
@@ -43,21 +46,34 @@
 <script>
 export default {
   name: "NavBar",
+  mounted(){
+
+    if (sessionStorage.getItem("DoctorID") != null){
+      this.doctorStatus = true;
+      this.loginStatus = false;
+      this.doctorID = sessionStorage.getItem("DoctorID");
+    } else if (sessionStorage.getItem("PatientICNo") != null){
+      this.patientStatus = true;
+      this.loginStatus = false;
+      this.patientICNo = sessionStorage.getItem("PatientICNo");
+    }
+
+  },
   data() {
     return {
-      loginStatus: false
+      loginStatus: true,
+      doctorStatus: false,
+      patientStatus: false,
+      doctorID: "",
+      patientICNo: ""
     };
   },
   methods: {
-    guestuserAlert() {
-      this.$swal({
-        icon: "warning",
-        title: "Want to view Saved Recipes?",
-        text: "Login/Register to gain access to this page",
-        confirmButtonText:
-          '<a href="/login" style="color: #FFF; text-decoration: none; font-weight: normal" title="Proceed to login">Login/Register</a>',
-        confirmButtonColor: "#5B2601",
-      });
+    removeSession(){
+      sessionStorage.clear();
+      this.doctorStatus = false;
+      this.patientStatus = false;
+      this.loginStatus = true;
     },
   },
 };

@@ -134,7 +134,6 @@ export default {
   },
   methods: {
     login() {
-      console.log(this.doctorList);
       if (this.email == "" || this.password == "") {
         this.$swal({
           icon: "error",
@@ -154,9 +153,8 @@ export default {
             timer: 1400,
           });
           sessionStorage.setItem("PatientICNo", this.email);
-          this.$router.push("/");
+          this.$router.push("/index.html");
       } else if (this.doctorList.includes(this.email)) {
-        console.log(1123);
           this.$swal({
             icon: "success",
             position: 'center',
@@ -166,7 +164,7 @@ export default {
             timer: 1400,
           });
           sessionStorage.setItem("DoctorID", this.email);
-          this.$router.push("/doctorAppts");
+          this.$router.push("/index.html");
       } else {
             this.$swal({
             icon: "error",

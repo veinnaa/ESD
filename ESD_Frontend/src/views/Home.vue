@@ -12,12 +12,14 @@
 
         <div class="row row-cols-1 row-cols-md-3 row-cols-sm-2 g-4">
           <div class="col" v-for="(cat, i) in categoryList" :key="i">
+            
             <div class="card">
               <img :src="cat.img" class="img card-img-top" :alt="cat.title" />
               <div class="card-body">
                 <h5 class="card-title pt-3 fw-bold text-center">{{ cat.title }}</h5>
               </div>
             </div>
+            
           </div>
         </div>
       </div>
@@ -53,6 +55,13 @@ export default {
         behavior: "smooth",
       });
     },
+  },
+  created() {
+    // console.log(window.location)
+    if (!window.location.href.includes('#loaded')) {
+        window.location = window.location + '#loaded';
+        window.location.reload()
+    }
   },
 };
 </script>

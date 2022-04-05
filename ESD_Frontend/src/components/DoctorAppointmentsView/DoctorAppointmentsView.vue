@@ -1,6 +1,7 @@
 <template>
   <div class="appointments-view">
     <div class="upcoming-header">
+      <h1>Doctor's Interface</h1>
       <h2>Upcoming Appointment</h2>
       <AppointmentCard class="appointment-card" />
     </div>
@@ -55,12 +56,6 @@
           <td v-else><i class="bi bi-check-circle-fill text-success"></i></td>
           <td v-if="appointment.PaymentStatus == false">Pending</td>
           <td v-else>Paid</td>
-          <td>
-            <i
-              class="bi bi-trash-fill text-danger"
-              @click="confirmCancellation(appointment['BookingID'])"
-            ></i>
-          </td>
         </tr>
       </tbody>
     </table>
@@ -80,6 +75,7 @@ export default {
   data() {
     return {
       details: {},
+      doctorID:"",
       dateList: [],
       patientName: "",
       patientICNo: "",
@@ -93,11 +89,11 @@ export default {
         "Status",
         "Accept?",
         "Payment Status",
-        "Cancel?",
       ],
     };
   },
   beforeMount() {
+    
     this.getAppointmentDetails();
   },
   methods: {
@@ -120,7 +116,7 @@ export default {
         if (result.isConfirmed) {
           this.acceptAppointment(bookingID);
         } else if (result.dismiss === this.$swal.DismissReason.cancel) {
-          this.declineAppointment(bookingID);
+          this.cancelAppointment(bookingID);
         }
       });
     },
@@ -133,7 +129,6 @@ export default {
       )
         .then((response) => response.json())
         .then((res) => {
-          console.log(res);
           this.$swal({
             icon: "success",
             title: "Appointment has been accepted!",
@@ -143,28 +138,6 @@ export default {
         })
         .catch((error) => {
           console.log("unable to accept booking " + error);
-        });
-    },
-    async declineAppointment(bookingID) {
-      const response = await fetch(
-        "http://localhost:5002/booking/declined/" + bookingID,
-        {
-          method: "PUT",
-        }
-      )
-        .then((response) => response.json())
-        .then((res) => {
-          console.log(res);
-          this.$swal({
-            icon: "success",
-            title: "Appointment has been declined!",
-            text: "Appoinment is cancelled.",
-            showConfirmButton: false,
-          });
-          location.reload();
-        })
-        .catch((error) => {
-          console.log("unable to decline booking " + error);
         });
     },
     confirmCancellation(bookingID) {
@@ -191,7 +164,6 @@ export default {
       )
         .then(response=>response.json())
         .then((res) => {
-          console.log(res);
           this.$swal({
             icon: "success",
             title: "You've cancelled successfully!",
@@ -209,11 +181,11 @@ export default {
     },
 
     async getAppointmentDetails() {
-      const response = await fetch(bookingURL)
+      this.doctorID = sessionStorage.getItem("DoctorID");
+      const response = await fetch(bookingURL+"/doctor/"+this.doctorID)
         .then((response) => response.json())
         .then((data) => {
-          console.log(data);
-          this.details = data.data["booking"];
+          this.details = data.data;
         })
         .catch((error) => {
           // Errors when calling the service; such as network error,
@@ -229,18 +201,14 @@ export default {
           date.toLocaleDateString(),
           date.toLocaleTimeString(),
         ]);
-        // console.log(this.dateList);
       }
     },
     getPatientName(patientICNo) {
-      console.log(patientICNo);
       const response = fetch("http://localhost:5000/patient/" + patientICNo)
         .then((response) => response.json())
         .then((data) => {
-          // console.log(data);
           this.patientName = data.data["PatientName"];
           this.patientNameList.push(this.patientName);
-          // console.log(this.patientName);
         })
         .catch((error) => {
           console.log("unable to get patient " + error);
