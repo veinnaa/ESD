@@ -9,12 +9,10 @@
           <td>{{patientName}}</td>
         </tr>
         <tr v-for="(v, k) in detail" :key="k">
-          <th scope="row" v-if="k == 'DoctorID'">DoctorName</th>
-          <th scope="row" v-else>{{ k }}</th>
+          <th scope="row">{{ k }}</th>
           <td v-if="k == 'AcceptanceStatus' && v == false">Pending Confirmation</td>
           <td v-else-if="k == 'AcceptanceStatus' && v == true">Confirmed</td>
           <td v-else-if="k == 'DateTime'">{{ datetime }}</td>
-          <td v-else-if="k == 'DoctorID'">{{ doctorName }}</td>
           <td v-else-if="k == 'PatientICNo'">{{ patientName }}</td>
           <td v-else>{{ v }}</td>
         </tr>
